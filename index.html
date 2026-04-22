@@ -1,962 +1,623 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Psychology Final Exam – Rapid Study Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Psych Final – Study Guide</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
-
   :root {
-    --bg: #0d0f14;
-    --surface: #161923;
-    --card: #1c2130;
-    --border: #2a3248;
-    --accent: #f5a623;
-    --accent2: #4fc3f7;
-    --accent3: #a78bfa;
-    --accent4: #34d399;
-    --accent5: #f87171;
-    --text: #e8eaf0;
-    --muted: #8892a4;
-    --tag-bg: #252d3f;
+    --bg:#0d0f14;--surface:#161923;--card:#1c2130;--border:#2a3248;
+    --accent:#f5a623;--accent2:#4fc3f7;--accent3:#a78bfa;--accent4:#34d399;--accent5:#f87171;
+    --text:#e8eaf0;--muted:#8892a4;--tag-bg:#252d3f;
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 300;
-    line-height: 1.7;
-  }
-
-  header {
-    background: linear-gradient(135deg, #0d0f14 0%, #1a1040 50%, #0d1520 100%);
-    padding: 3rem 2rem 2rem;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 30% 50%, rgba(167,139,250,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 30%, rgba(245,166,35,0.08) 0%, transparent 50%);
-  }
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 900;
-    color: var(--accent);
-    position: relative;
-    letter-spacing: -1px;
-  }
-  header p {
-    color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-    position: relative;
-  }
-  .timer-badge {
-    display: inline-block;
-    background: rgba(248,113,113,0.15);
-    border: 1px solid #f87171;
-    color: #f87171;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    padding: 0.3rem 1rem;
-    border-radius: 999px;
-    margin-top: 1rem;
-    position: relative;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
-
-  nav {
-    background: var(--surface);
-    padding: 1rem 1.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  nav a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 0.78rem;
-    font-family: 'IBM Plex Mono', monospace;
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
-    border: 1px solid transparent;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  nav a:hover { color: var(--accent); border-color: var(--accent); background: rgba(245,166,35,0.05); }
-
-  main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-  .section {
-    margin-bottom: 3rem;
-    animation: fadeIn 0.4s ease;
-  }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--muted);
-    min-width: 2rem;
-  }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
-  .section-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  .card:hover { border-color: #3a4560; }
-
-  .card-q {
-    padding: 1rem 1.25rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-    user-select: none;
-  }
-  .card-q:hover { background: rgba(255,255,255,0.02); }
-  .q-text {
-    font-size: 0.92rem;
-    font-weight: 500;
-    color: var(--text);
-    flex: 1;
-  }
-  .toggle-icon {
-    font-size: 1rem;
-    color: var(--muted);
-    transition: transform 0.2s;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .card.open .toggle-icon { transform: rotate(90deg); }
-
-  .card-a {
-    display: none;
-    padding: 0 1.25rem 1.25rem;
-    border-top: 1px solid var(--border);
-  }
-  .card.open .card-a { display: block; }
-  .card-a p { font-size: 0.88rem; color: #c5cad8; margin-top: 0.75rem; line-height: 1.8; }
-  .card-a ul { margin: 0.6rem 0 0 1rem; }
-  .card-a ul li { font-size: 0.88rem; color: #c5cad8; margin-bottom: 0.3rem; }
-
-  .tag {
-    display: inline-block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.68rem;
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-    background: var(--tag-bg);
-    color: var(--muted);
-    margin-right: 0.3rem;
-    margin-bottom: 0.3rem;
-    vertical-align: middle;
-  }
-  .tag.key { background: rgba(245,166,35,0.12); color: var(--accent); }
-  .tag.def { background: rgba(79,195,247,0.1); color: var(--accent2); }
-  .tag.ex { background: rgba(52,211,153,0.1); color: var(--accent4); }
-
-  .highlight-box {
-    background: rgba(167,139,250,0.07);
-    border-left: 3px solid var(--accent3);
-    border-radius: 0 8px 8px 0;
-    padding: 0.75rem 1rem;
-    margin: 0.75rem 0;
-    font-size: 0.87rem;
-    color: #c5cad8;
-  }
-  .warn-box {
-    background: rgba(245,166,35,0.06);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0;
-    padding: 0.75rem 1rem;
-    margin: 0.75rem 0;
-    font-size: 0.87rem;
-    color: #c5cad8;
-  }
-  .warn-box strong, .highlight-box strong { color: var(--text); }
-
-  .compare-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.84rem;
-    margin: 0.75rem 0;
-  }
-  .compare-table th {
-    background: var(--tag-bg);
-    padding: 0.5rem 0.75rem;
-    text-align: left;
-    font-weight: 600;
-    color: var(--accent2);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.78rem;
-  }
-  .compare-table td {
-    padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid var(--border);
-    color: #c5cad8;
-    vertical-align: top;
-  }
-  .compare-table tr:last-child td { border-bottom: none; }
-  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-  .expand-all-btn {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    padding: 0.35rem 0.85rem;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    transition: all 0.2s;
-  }
-  .expand-all-btn:hover { color: var(--accent); border-color: var(--accent); }
-
-  strong { color: var(--text); font-weight: 600; }
-
-  .color-1 { color: #f5a623; }
-  .color-2 { color: #4fc3f7; }
-  .color-3 { color: #a78bfa; }
-  .color-4 { color: #34d399; }
-  .color-5 { color: #f87171; }
-
-  .dot-1 { background: #f5a623; }
-  .dot-2 { background: #4fc3f7; }
-  .dot-3 { background: #a78bfa; }
-  .dot-4 { background: #34d399; }
-  .dot-5 { background: #f87171; }
-  .dot-6 { background: #fb923c; }
-  .dot-7 { background: #c084fc; }
-  .dot-8 { background: #60a5fa; }
-  .dot-9 { background: #2dd4bf; }
-
-  footer {
-    text-align: center;
-    padding: 2rem;
-    color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.75rem;
-    border-top: 1px solid var(--border);
-  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden}
+  header{background:linear-gradient(135deg,#0d0f14 0%,#1a1040 50%,#0d1520 100%);padding:2rem 1.25rem 1.5rem;text-align:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(167,139,250,0.12) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(245,166,35,0.08) 0%,transparent 50%)}
+  header h1{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,6vw,3rem);font-weight:900;color:var(--accent);position:relative;letter-spacing:-0.5px}
+  header p{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;margin-top:0.4rem;position:relative}
+  .timer-badge{display:inline-block;background:rgba(248,113,113,0.15);border:1px solid #f87171;color:#f87171;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;padding:0.28rem 0.9rem;border-radius:999px;margin-top:0.75rem;position:relative;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+  .mode-tabs{display:flex;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200}
+  .mode-tab{flex:1;padding:0.85rem 0.5rem;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s}
+  .mode-tab.active{color:var(--accent3);border-bottom-color:var(--accent3)}
+  .section-nav{background:var(--surface);padding:0.6rem 0.75rem;display:flex;gap:0.4rem;overflow-x:auto;overflow-y:hidden;border-bottom:1px solid var(--border);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .section-nav::-webkit-scrollbar{display:none}
+  .section-nav a{flex-shrink:0;color:var(--muted);text-decoration:none;font-size:0.72rem;font-family:'IBM Plex Mono',monospace;padding:0.3rem 0.65rem;border-radius:20px;border:1px solid var(--border);white-space:nowrap;transition:all 0.2s}
+  .section-nav a:active{color:var(--accent);border-color:var(--accent);background:rgba(245,166,35,0.08)}
+  #study-view{display:block}
+  main{padding:1.25rem 1rem 4rem}
+  .section{margin-bottom:2.5rem}
+  .section-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;padding-bottom:0.6rem;border-bottom:1px solid var(--border)}
+  .section-num{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--muted)}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700}
+  .section-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:0.75rem;overflow:hidden}
+  .card-q{padding:0.9rem 1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;user-select:none;-webkit-user-select:none}
+  .q-text{font-size:0.88rem;font-weight:500;color:var(--text);flex:1}
+  .toggle-icon{font-size:0.85rem;color:var(--muted);transition:transform 0.2s;flex-shrink:0;margin-top:3px}
+  .card.open .toggle-icon{transform:rotate(90deg)}
+  .card-a{display:none;padding:0 1rem 1rem;border-top:1px solid var(--border)}
+  .card.open .card-a{display:block}
+  .card-a p{font-size:0.84rem;color:#c5cad8;margin-top:0.65rem;line-height:1.75}
+  .card-a ul{margin:0.5rem 0 0 1rem}
+  .card-a ul li{font-size:0.84rem;color:#c5cad8;margin-bottom:0.3rem}
+  .highlight-box{background:rgba(167,139,250,0.07);border-left:3px solid var(--accent3);border-radius:0 8px 8px 0;padding:0.65rem 0.85rem;margin:0.65rem 0;font-size:0.83rem;color:#c5cad8}
+  .warn-box{background:rgba(245,166,35,0.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:0.65rem 0.85rem;margin:0.65rem 0;font-size:0.83rem;color:#c5cad8}
+  .info-box{background:rgba(79,195,247,0.06);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:0.65rem 0.85rem;margin:0.65rem 0;font-size:0.83rem;color:#c5cad8}
+  .warn-box strong,.highlight-box strong,.info-box strong{color:var(--text)}
+  .compare-table{width:100%;border-collapse:collapse;font-size:0.78rem;margin:0.65rem 0;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .compare-table th{background:var(--tag-bg);padding:0.45rem 0.65rem;text-align:left;font-weight:600;color:var(--accent2);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;white-space:nowrap}
+  .compare-table td{padding:0.45rem 0.65rem;border-bottom:1px solid var(--border);color:#c5cad8;vertical-align:top}
+  .compare-table tr:last-child td{border-bottom:none}
+  .expand-all-btn{background:none;border:1px solid var(--border);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;padding:0.3rem 0.75rem;border-radius:6px;cursor:pointer;margin-bottom:0.85rem}
+  strong{color:var(--text);font-weight:600}
+  .color-1{color:#f5a623}.color-2{color:#4fc3f7}.color-3{color:#a78bfa}.color-4{color:#34d399}.color-5{color:#f87171}
+  .dot-1{background:#f5a623}.dot-2{background:#4fc3f7}.dot-3{background:#a78bfa}.dot-4{background:#34d399}
+  .dot-5{background:#f87171}.dot-6{background:#fb923c}.dot-7{background:#c084fc}.dot-8{background:#60a5fa}.dot-9{background:#2dd4bf}
+  #flashcard-view{display:none;padding:1rem 1rem 5rem}
+  .fc-filter-wrap{display:flex;gap:0.4rem;overflow-x:auto;padding-bottom:0.5rem;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-bottom:0.75rem}
+  .fc-filter-wrap::-webkit-scrollbar{display:none}
+  .fc-filter-btn{flex-shrink:0;background:var(--card);border:1px solid var(--border);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.7rem;padding:0.3rem 0.65rem;border-radius:20px;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+  .fc-filter-btn.on{background:rgba(167,139,250,0.12);border-color:var(--accent3);color:var(--accent3)}
+  .fc-top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
+  .fc-counter{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--muted)}
+  .fc-counter span{color:var(--text);font-weight:600}
+  .fc-shuffle-btn{background:none;border:1px solid var(--border);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.7rem;padding:0.28rem 0.65rem;border-radius:6px;cursor:pointer}
+  .fc-progress-bar{width:100%;height:3px;background:var(--border);border-radius:2px;margin-bottom:1rem;overflow:hidden}
+  .fc-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent3),var(--accent2));border-radius:2px;transition:width 0.3s ease}
+  .fc-scene{perspective:1000px;width:100%;height:240px;cursor:pointer;margin-bottom:1.25rem;touch-action:manipulation}
+  .fc-card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.45s cubic-bezier(0.4,0,0.2,1)}
+  .fc-scene.flipped .fc-card-inner{transform:rotateY(180deg)}
+  .fc-front,.fc-back{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1.25rem;text-align:center;border:1px solid var(--border)}
+  .fc-front{background:linear-gradient(135deg,#1c2130,#1a1535);border-color:var(--accent3)}
+  .fc-back{background:linear-gradient(135deg,#111b24,#0f1a1a);border-color:var(--accent4);transform:rotateY(180deg);overflow-y:auto}
+  .fc-label{font-family:'IBM Plex Mono',monospace;font-size:0.62rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:0.75rem}
+  .fc-front .fc-label{color:var(--accent3)}
+  .fc-back .fc-label{color:var(--accent4)}
+  .fc-term{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,4vw,1.5rem);font-weight:700;color:var(--text);line-height:1.3}
+  .fc-category{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--muted);margin-top:0.6rem}
+  .fc-hint{font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:var(--muted);margin-top:1rem}
+  .fc-def{font-size:0.84rem;color:#c5cad8;line-height:1.65}
+  .fc-nav{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-bottom:1rem}
+  .fc-nav-btn{background:var(--card);border:1px solid var(--border);color:var(--text);font-size:1.1rem;min-width:48px;height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .fc-nav-btn:disabled{opacity:0.25}
+  .fc-flip-btn{flex:1;background:rgba(167,139,250,0.12);border:1px solid var(--accent3);color:var(--accent3);font-family:'IBM Plex Mono',monospace;font-size:0.8rem;padding:0.7rem 1rem;border-radius:10px;cursor:pointer}
+  .fc-rating{display:flex;gap:0.5rem;margin-bottom:1rem}
+  .fc-rate-btn{flex:1;padding:0.7rem 0.25rem;border-radius:10px;border:1px solid;font-family:'IBM Plex Mono',monospace;font-size:0.68rem;cursor:pointer;background:none;line-height:1.4;text-align:center}
+  .fc-rate-btn.hard{border-color:#f87171;color:#f87171}
+  .fc-rate-btn.good{border-color:var(--accent);color:var(--accent)}
+  .fc-rate-btn.easy{border-color:var(--accent4);color:var(--accent4)}
+  .fc-stats{display:flex;gap:0.75rem;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--muted);flex-wrap:wrap}
+  .fc-stats span{display:flex;align-items:center;gap:0.3rem}
+  .fc-stats .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+  .fc-done{text-align:center;padding:2.5rem 1rem}
+  .fc-done h2{font-family:'Playfair Display',serif;font-size:1.75rem;color:var(--accent4);margin-bottom:0.6rem}
+  .fc-done p{color:var(--muted);font-size:0.86rem;margin-bottom:1.25rem}
+  .fc-restart-btn{background:rgba(52,211,153,0.1);border:1px solid var(--accent4);color:var(--accent4);font-family:'IBM Plex Mono',monospace;font-size:0.82rem;padding:0.65rem 1.5rem;border-radius:8px;cursor:pointer}
+  footer{text-align:center;padding:1.5rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;border-top:1px solid var(--border)}
+  @media(min-width:640px){main,#flashcard-view{max-width:760px;margin:0 auto;padding-left:1.5rem;padding-right:1.5rem}.fc-scene{height:280px}.fc-rate-btn{font-size:0.75rem;padding:0.55rem 0.5rem}.section-title{font-size:1.4rem}}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Psychology Final Exam</h1>
-  <p>Rapid Study Guide — All Topics Covered</p>
-  <div class="timer-badge">⚡ Exam today at 5:00 PM — Study smart!</div>
+  <h1>Psychology Final</h1>
+  <p>Complete Study Guide + Flashcards</p>
+  <div class="timer-badge">⚡ Exam today at 5:00 PM</div>
 </header>
 
-<nav>
-  <a href="#intro">Intro & Methods</a>
-  <a href="#neuro">Neuroscience</a>
-  <a href="#sensation">Sensation</a>
-  <a href="#learning">Learning</a>
-  <a href="#memory">Memory</a>
-  <a href="#development">Development</a>
-  <a href="#personality">Personality</a>
-  <a href="#social">Social Psych</a>
-  <a href="#disorders">Disorders</a>
-  <a href="#therapy">Therapy</a>
-</nav>
+<div class="mode-tabs">
+  <button class="mode-tab active" onclick="showView('study')">📖 Study Guide</button>
+  <button class="mode-tab" onclick="showView('flashcards')">🃏 Flashcards</button>
+</div>
 
+<div class="section-nav" id="sectionNav">
+  <a href="#intro">Intro</a><a href="#neuro">Neuro</a><a href="#sensation">Sensation</a>
+  <a href="#learning">Learning</a><a href="#memory">Memory</a><a href="#development">Dev</a>
+  <a href="#personality">Personality</a><a href="#social">Social</a>
+  <a href="#disorders">Disorders</a><a href="#therapy">Therapy</a>
+</div>
+
+<!-- ============ STUDY GUIDE ============ -->
+<div id="study-view">
 <main>
 
-<!-- ====== SECTION 1 ====== -->
+<!-- 01 INTRO -->
 <div class="section" id="intro">
-  <div class="section-header">
-    <span class="section-num">01</span>
-    <span class="section-dot dot-1"></span>
-    <h2 class="section-title color-1">Introduction & Research Methods</h2>
-  </div>
+  <div class="section-header"><span class="section-num">01</span><span class="section-dot dot-1"></span><h2 class="section-title color-1">Intro & Research Methods</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">What is psychology? What is critical thinking?</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p><strong>Psychology</strong> is the scientific study of behavior and mental processes.</p>
-      <p><strong>Critical thinking</strong> means evaluating claims using evidence, logic, and skepticism rather than assumptions. It involves: asking questions, examining evidence, analyzing assumptions, considering alternatives, and drawing careful conclusions.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">What is psychology? What is critical thinking?</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Psychology:</strong> Scientific study of behavior and mental processes.</p><p><strong>Critical thinking:</strong> Evaluating claims using evidence, logic, and skepticism — asking questions, examining evidence, analyzing assumptions, considering alternatives, and drawing careful conclusions.</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Contemporary schools of thought in psychology</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <table class="compare-table">
-        <tr><th>School</th><th>Core Idea</th></tr>
-        <tr><td><strong>Psychoanalytic/Psychodynamic</strong></td><td>Unconscious conflicts (Freud); early childhood shapes personality</td></tr>
-        <tr><td><strong>Behaviorism</strong></td><td>Only observable behavior matters; shaped by environment/conditioning (Watson, Skinner)</td></tr>
-        <tr><td><strong>Gestalt</strong></td><td>"The whole is greater than the sum of its parts" — perception is organized holistically</td></tr>
-        <tr><td><strong>Humanistic</strong></td><td>Focus on free will, growth, self-actualization (Maslow, Rogers)</td></tr>
-        <tr><td><strong>Cognitive</strong></td><td>Mental processes (thinking, memory, problem-solving) shape behavior</td></tr>
-      </table>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Contemporary schools of thought</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><table class="compare-table"><tr><th>School</th><th>Core Idea</th></tr><tr><td><strong>Psychodynamic</strong></td><td>Unconscious conflicts and early childhood shape personality (Freud)</td></tr><tr><td><strong>Behaviorism</strong></td><td>Only observable behavior matters; shaped by conditioning (Watson, Skinner)</td></tr><tr><td><strong>Gestalt</strong></td><td>"Whole > sum of parts" — perception is organized holistically</td></tr><tr><td><strong>Humanistic</strong></td><td>Free will, growth, self-actualization (Maslow, Rogers)</td></tr><tr><td><strong>Cognitive</strong></td><td>Mental processes (thinking, memory) shape behavior</td></tr></table></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Elements of a true experiment: IV, DV, groups, random assignment</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Independent Variable (IV):</strong> What the researcher manipulates (the cause)</li>
-        <li><strong>Dependent Variable (DV):</strong> What is measured (the effect/outcome)</li>
-        <li><strong>Experimental group:</strong> Receives the treatment/manipulation</li>
-        <li><strong>Control group:</strong> Does NOT receive the treatment (baseline for comparison)</li>
-        <li><strong>Random assignment:</strong> Participants randomly placed into groups — this controls for pre-existing differences and allows cause-and-effect conclusions</li>
-      </ul>
-      <div class="warn-box">⚠️ <strong>Key:</strong> Only true experiments (with random assignment) can establish cause and effect.</div>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">IV, DV, groups, random assignment</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>IV:</strong> What the researcher manipulates (the cause)</li><li><strong>DV:</strong> What is measured (the effect)</li><li><strong>Experimental group:</strong> Receives the treatment</li><li><strong>Control group:</strong> No treatment — baseline comparison</li><li><strong>Random assignment:</strong> Controls pre-existing differences → allows cause-and-effect conclusions</li></ul><div class="warn-box">⚠️ Only true experiments (with random assignment) can establish cause and effect.</div></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Hypothesis vs. Operational Definition</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p><strong>Hypothesis:</strong> A testable prediction about the relationship between variables. <em>Example: "Students who sleep 8 hours will score higher on exams."</em></p>
-      <p><strong>Operational definition:</strong> How a variable is specifically measured or defined in the study. <em>Example: "Sleep" = hours logged via wristband tracker; "score" = percent correct on a 50-item test.</em></p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Hypothesis vs. Operational Definition</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Hypothesis:</strong> A testable prediction about the relationship between variables. <em>"Students who sleep 8 hrs score higher on exams."</em></p><p><strong>Operational definition:</strong> How a variable is specifically measured. <em>"Sleep" = wristband hours; "score" = % correct on 50-item test.</em></p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Correlations: directionality & third variable problems</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p>A <strong>correlation</strong> shows a relationship between two variables — it does NOT prove causation.</p>
-      <ul>
-        <li><strong>Directionality problem:</strong> We don't know which variable causes the other. (Does depression cause inactivity, or does inactivity cause depression?)</li>
-        <li><strong>Third variable problem:</strong> A hidden third variable may cause both. (Ice cream sales and drowning rates correlate — both caused by hot weather.)</li>
-      </ul>
-      <p><strong>Experiment vs. Correlation:</strong> An experiment manipulates a variable and uses random assignment → can establish cause. A correlational study just measures variables as they exist → cannot establish cause.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Placebo effect, double-blind design, replication</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Placebo effect:</strong> A participant's belief that they are receiving treatment causes real psychological or physical changes — even without the actual treatment.</p><p><strong>Double-blind design:</strong> Neither the participants NOR the researchers know who is in the experimental vs. control group — eliminates both participant and researcher bias.</p><p><strong>Replication:</strong> Repeating a study to verify its results. A finding is only considered reliable when it has been replicated by independent researchers. Peer review ensures research quality before publication.</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Surveys, observational studies, case studies; sample vs. population</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Survey:</strong> Self-report questionnaire given to many people</li>
-        <li><strong>Observational study:</strong> Researcher watches and records behavior without intervening</li>
-        <li><strong>Case study:</strong> In-depth study of one individual or group</li>
-      </ul>
-      <p><strong>Population:</strong> The entire group of interest. <strong>Sample:</strong> The subset of the population actually studied. Good samples are representative of the population.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Correlations: directionality & third variable</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p>A correlation shows a relationship — NOT causation.</p><ul><li><strong>Directionality:</strong> Can't tell which variable causes the other</li><li><strong>Third variable:</strong> A hidden cause drives both (hot weather → ice cream sales AND drowning rates)</li></ul></div></div>
+
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Survey, observational study, case study; sample vs. population</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Survey:</strong> Self-report questionnaire to many people</li><li><strong>Observational study:</strong> Watch behavior without intervening</li><li><strong>Case study:</strong> In-depth study of one individual</li></ul><p><strong>Population:</strong> Entire group of interest. <strong>Sample:</strong> Subset actually studied. Good samples are representative.</p></div></div>
 </div>
 
-<!-- ====== SECTION 2 ====== -->
+<!-- 02 NEURO -->
 <div class="section" id="neuro">
-  <div class="section-header">
-    <span class="section-num">02</span>
-    <span class="section-dot dot-2"></span>
-    <h2 class="section-title color-2">Neuroscience & Biological Foundations</h2>
-  </div>
+  <div class="section-header"><span class="section-num">02</span><span class="section-dot dot-2"></span><h2 class="section-title color-2">Neuroscience</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Parts of a neuron and their functions</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <table class="compare-table">
-        <tr><th>Part</th><th>Function</th></tr>
-        <tr><td><strong>Dendrites</strong></td><td>Receive incoming signals from other neurons</td></tr>
-        <tr><td><strong>Cell body (soma)</strong></td><td>Processes signals; contains nucleus</td></tr>
-        <tr><td><strong>Axon</strong></td><td>Carries electrical signal away from cell body</td></tr>
-        <tr><td><strong>Myelin sheath</strong></td><td>Fatty coating that insulates axon; speeds signal transmission</td></tr>
-        <tr><td><strong>Terminal buds</strong></td><td>Release neurotransmitters into synapse</td></tr>
-        <tr><td><strong>Synapse</strong></td><td>The gap between neurons where communication occurs</td></tr>
-      </table>
-      <p><strong>Action potential:</strong> The electrical charge that travels down the axon when a neuron fires. It's all-or-nothing.</p>
-      <p><strong>Neurotransmitters:</strong> Chemical messengers released from terminal buds that cross the synapse and bind to the next neuron's receptors.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Parts of a neuron</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><table class="compare-table"><tr><th>Part</th><th>Function</th></tr><tr><td><strong>Dendrites</strong></td><td>Receive incoming signals from other neurons</td></tr><tr><td><strong>Cell body</strong></td><td>Processes signals; contains nucleus</td></tr><tr><td><strong>Axon</strong></td><td>Carries signal away from cell body</td></tr><tr><td><strong>Myelin sheath</strong></td><td>Insulates axon; speeds signal</td></tr><tr><td><strong>Terminal buds</strong></td><td>Release neurotransmitters into synapse</td></tr><tr><td><strong>Synapse</strong></td><td>Gap between neurons where communication occurs</td></tr></table><p><strong>Action potential:</strong> All-or-nothing electrical impulse down the axon. <strong>Neurotransmitters:</strong> Chemical messengers that cross the synapse and bind to receptors on the next neuron.</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">The nervous system — all parts and functions</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <div class="highlight-box">
-        <strong>Central Nervous System (CNS):</strong> Brain + Spinal cord<br>
-        <strong>Peripheral Nervous System (PNS):</strong> All nerves outside brain/spinal cord
-      </div>
-      <p>The PNS splits into:</p>
-      <ul>
-        <li><strong>Somatic NS:</strong> Controls voluntary muscle movements; carries sensory info to CNS</li>
-        <li><strong>Autonomic NS:</strong> Controls involuntary functions (heart rate, digestion, glands)</li>
-      </ul>
-      <p>The Autonomic NS splits into:</p>
-      <ul>
-        <li><strong>Sympathetic:</strong> "Fight or flight" — accelerates heart rate, dilates pupils, slows digestion</li>
-        <li><strong>Parasympathetic:</strong> "Rest and digest" — slows heart, constricts pupils, promotes digestion</li>
-      </ul>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">The nervous system — all parts</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><div class="highlight-box"><strong>CNS:</strong> Brain + Spinal cord &nbsp;|&nbsp; <strong>PNS:</strong> All other nerves</div><p><strong>Somatic NS:</strong> Voluntary muscle movement + sensory info to CNS</p><p><strong>Autonomic NS:</strong> Involuntary (heart, digestion)</p><ul><li><strong>Sympathetic:</strong> Fight or flight — ↑ heart rate, dilates pupils, inhibits digestion</li><li><strong>Parasympathetic:</strong> Rest & digest — ↓ heart rate, promotes digestion and recovery</li></ul></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Brain lobes and cortex regions</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <table class="compare-table">
-        <tr><th>Structure</th><th>Function</th></tr>
-        <tr><td><strong>Frontal lobe / Motor cortex</strong></td><td>Planning, decision-making, personality; voluntary movement</td></tr>
-        <tr><td><strong>Parietal lobe / Somatosensory cortex</strong></td><td>Processes touch, pain, temperature, body position</td></tr>
-        <tr><td><strong>Occipital lobe / Primary visual cortex</strong></td><td>Processes visual information</td></tr>
-        <tr><td><strong>Temporal lobe / Primary auditory cortex</strong></td><td>Language, hearing, memory (contains hippocampus)</td></tr>
-        <tr><td><strong>Corpus callosum</strong></td><td>Bundle of fibers connecting left and right hemispheres</td></tr>
-      </table>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Brain lobes & cortex regions</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><table class="compare-table"><tr><th>Region</th><th>Function</th></tr><tr><td><strong>Frontal / Motor cortex</strong></td><td>Planning, personality, impulse control, voluntary movement</td></tr><tr><td><strong>Parietal / Somatosensory</strong></td><td>Touch, pain, temperature, body position</td></tr><tr><td><strong>Occipital / Visual cortex</strong></td><td>Processes visual information</td></tr><tr><td><strong>Temporal / Auditory cortex</strong></td><td>Language, hearing, memory</td></tr><tr><td><strong>Corpus callosum</strong></td><td>Connects left & right hemispheres</td></tr></table></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Thalamus, hypothalamus, amygdala, hippocampus</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Thalamus:</strong> Relay station — routes sensory info to correct brain regions</li>
-        <li><strong>Hypothalamus:</strong> Regulates drives (hunger, thirst, sex, temperature); controls pituitary gland</li>
-        <li><strong>Amygdala:</strong> Emotional processing, especially fear and aggression</li>
-        <li><strong>Hippocampus:</strong> Forming new long-term memories; spatial navigation</li>
-      </ul>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Thalamus, hypothalamus, amygdala, hippocampus</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Thalamus:</strong> Relay station — routes sensory info to correct brain areas</li><li><strong>Hypothalamus:</strong> Regulates hunger, thirst, sex, temperature; controls pituitary gland</li><li><strong>Amygdala:</strong> Fear and aggression (emotional processing)</li><li><strong>Hippocampus:</strong> Forming new long-term memories; spatial navigation</li></ul></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Pons, medulla, substantia nigra, cerebellum & neuroplasticity</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Medulla:</strong> Controls vital functions — breathing, heart rate, blood pressure</li>
-        <li><strong>Pons:</strong> Involved in sleep, arousal, relaying signals; connects cerebrum to cerebellum</li>
-        <li><strong>Substantia nigra:</strong> Produces dopamine; involved in movement (damaged in Parkinson's)</li>
-        <li><strong>Cerebellum:</strong> Coordination, balance, fine motor movements</li>
-      </ul>
-      <p><strong>Neuroplasticity:</strong> The brain's ability to reorganize and form new neural connections throughout life — especially in response to learning or injury.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Medulla, pons, cerebellum, substantia nigra, neuroplasticity</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Medulla:</strong> Breathing, heart rate, blood pressure (vital functions)</li><li><strong>Pons:</strong> Sleep, arousal, relays signals to cerebellum</li><li><strong>Cerebellum:</strong> Coordination, balance, fine motor control</li><li><strong>Substantia nigra:</strong> Produces dopamine; smooth movement (damaged in Parkinson's)</li></ul><p><strong>Neuroplasticity:</strong> The brain's ability to reorganize and form new neural connections throughout life — especially in response to learning or injury.</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Endocrine system: glands and hormones</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p>The <strong>endocrine system</strong> communicates via <strong>hormones</strong> (chemical messengers) secreted by <strong>glands</strong> directly into the bloodstream — slower but longer-lasting than neural signals.</p>
-      <p>Key glands: pituitary (master gland), adrenal (stress hormones like cortisol/adrenaline), thyroid, pancreas, gonads (sex hormones).</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Endocrine system: glands, hormones, key examples</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p>The <strong>endocrine system</strong> communicates via <strong>hormones</strong> — chemical messengers secreted directly into the bloodstream by glands. Slower than neural signals but longer-lasting effects.</p><table class="compare-table"><tr><th>Gland</th><th>Key Hormones / Role</th></tr><tr><td><strong>Pituitary</strong></td><td>"Master gland" — controls other glands; growth hormone</td></tr><tr><td><strong>Adrenal glands</strong></td><td>Adrenaline (epinephrine) + cortisol — stress response</td></tr><tr><td><strong>Thyroid</strong></td><td>Regulates metabolism and energy</td></tr><tr><td><strong>Pancreas</strong></td><td>Insulin — regulates blood sugar</td></tr><tr><td><strong>Gonads</strong></td><td>Estrogen & testosterone — sex characteristics and drives</td></tr></table><div class="info-box"><strong>Key link:</strong> The hypothalamus controls the pituitary, which controls most other endocrine glands — making it the bridge between the nervous and endocrine systems.</div></div></div>
 </div>
 
-<!-- ====== SECTION 3 ====== -->
+<!-- 03 SENSATION -->
 <div class="section" id="sensation">
-  <div class="section-header">
-    <span class="section-num">03</span>
-    <span class="section-dot dot-3"></span>
-    <h2 class="section-title color-3">Sensation & Perception</h2>
-  </div>
+  <div class="section-header"><span class="section-num">03</span><span class="section-dot dot-3"></span><h2 class="section-title color-3">Sensation & Perception</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Sensation vs. Perception; Transduction</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p><strong>Sensation:</strong> Detection of physical stimuli by sensory organs (raw data input).</p>
-      <p><strong>Perception:</strong> The brain's interpretation and organization of those signals (making meaning).</p>
-      <p><strong>Transduction:</strong> Converting physical stimulus energy (light, sound waves, etc.) into electrical signals the brain can process.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Sensation vs. Perception; Transduction</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Sensation:</strong> Detection of physical stimuli by sensory organs — the raw data before any interpretation.</p><p><strong>Perception:</strong> The brain's active process of interpreting and organizing sensory signals into meaningful experiences.</p><p><strong>Transduction:</strong> Converting physical stimulus energy (light, sound waves, pressure) into electrical signals the brain can process.</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Bottom-up vs. Top-down processing</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Bottom-up processing:</strong> Starts with raw sensory data, builds up to perception. Data-driven. <em>Example: reading letter by letter.</em></li>
-        <li><strong>Top-down processing:</strong> Uses prior knowledge, context, and expectations to interpret sensory input. <em>Example: reading a misspelled word correctly because you know what it "should" say.</em></li>
-      </ul>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Bottom-up vs. Top-down processing</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Bottom-up:</strong> Starts with raw sensory data → builds to perception. Data-driven, no prior assumptions. <em>Example: sounding out an unfamiliar word letter by letter.</em></li><li><strong>Top-down:</strong> Uses prior knowledge & expectations to interpret input. <em>Example: reading a misspelled word correctly because context fills in the gap.</em></li></ul></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Absolute threshold, difference threshold (JND), sensory adaptation</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Absolute threshold:</strong> The minimum stimulus intensity detectable 50% of the time</li>
-        <li><strong>Difference threshold (JND – Just Noticeable Difference):</strong> The minimum change in stimulus needed to notice a difference 50% of the time</li>
-        <li><strong>Sensory adaptation:</strong> Diminished sensitivity to a constant stimulus over time (e.g., you stop noticing background noise)</li>
-      </ul>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Absolute threshold, JND, sensory adaptation</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Absolute threshold:</strong> Min stimulus detectable 50% of the time</li><li><strong>JND (Just Noticeable Difference / difference threshold):</strong> Min change in stimulus noticed 50% of the time</li><li><strong>Sensory adaptation:</strong> Diminished sensitivity to a constant stimulus over time (e.g., you stop noticing background music)</li></ul></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Kinesthetic sense, vestibular sense; monocular vs. binocular depth cues</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Kinesthetic sense:</strong> Awareness of body position and movement of limbs</li>
-        <li><strong>Vestibular sense:</strong> Sense of balance and spatial orientation (inner ear)</li>
-      </ul>
-      <p><strong>Depth cues:</strong></p>
-      <ul>
-        <li><strong>Monocular cues:</strong> Work with one eye — linear perspective, relative size, overlap, texture gradient, motion parallax</li>
-        <li><strong>Binocular cues:</strong> Require both eyes — retinal disparity (slightly different images from each eye) and convergence (eyes turning inward for close objects)</li>
-      </ul>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Gestalt principles of perception</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p>Gestalt principles describe how we organize sensory input into meaningful wholes — the brain imposes structure on what it perceives.</p><ul><li><strong>Figure-ground:</strong> We perceive one element as the "figure" (foreground) and the rest as "ground" (background)</li><li><strong>Proximity:</strong> Objects close together are perceived as a group</li><li><strong>Similarity:</strong> Objects that look alike are grouped together</li><li><strong>Closure:</strong> We mentally fill in gaps to perceive complete shapes</li><li><strong>Continuity:</strong> We perceive smooth, continuous patterns rather than abrupt changes</li></ul></div></div>
+
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Kinesthetic & vestibular sense; depth cues</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Kinesthetic sense:</strong> Body position and limb movement awareness</li><li><strong>Vestibular sense:</strong> Balance and spatial orientation (inner ear)</li><li><strong>Monocular cues:</strong> One eye — linear perspective, relative size, overlap, texture gradient, motion parallax</li><li><strong>Binocular cues:</strong> Both eyes — retinal disparity (each eye gets slightly different image) + convergence (eyes turn inward for close objects)</li></ul></div></div>
 </div>
 
-<!-- ====== SECTION 4 ====== -->
+<!-- 04 LEARNING -->
 <div class="section" id="learning">
-  <div class="section-header">
-    <span class="section-num">04</span>
-    <span class="section-dot dot-4"></span>
-    <h2 class="section-title color-4">Learning</h2>
-  </div>
+  <div class="section-header"><span class="section-num">04</span><span class="section-dot dot-4"></span><h2 class="section-title color-4">Learning</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Classical conditioning — all key terms with examples</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <div class="highlight-box">Classical conditioning = learning through association. An originally neutral stimulus comes to produce a response after being paired with a stimulus that naturally causes that response.</div>
-      <table class="compare-table">
-        <tr><th>Term</th><th>Definition</th><th>Pavlov Example</th></tr>
-        <tr><td><strong>Unconditioned Stimulus (US)</strong></td><td>Naturally triggers response</td><td>Food</td></tr>
-        <tr><td><strong>Unconditioned Response (UR)</strong></td><td>Natural, unlearned response to US</td><td>Salivation</td></tr>
-        <tr><td><strong>Neutral Stimulus (NS)</strong></td><td>Initially produces no response</td><td>Bell (before conditioning)</td></tr>
-        <tr><td><strong>Conditioned Stimulus (CS)</strong></td><td>Previously neutral; now triggers response after learning</td><td>Bell (after conditioning)</td></tr>
-        <tr><td><strong>Conditioned Response (CR)</strong></td><td>Learned response to CS</td><td>Salivation to bell</td></tr>
-      </table>
-      <ul>
-        <li><strong>Stimulus generalization:</strong> Responding to stimuli similar to the CS (dog conditioned to bell also responds to a buzzer)</li>
-        <li><strong>Stimulus discrimination:</strong> Responding only to the specific CS, not similar stimuli</li>
-        <li><strong>Extinction:</strong> CR disappears when CS is repeatedly presented without US</li>
-        <li><strong>Spontaneous recovery:</strong> Extinguished CR reappears after a rest period</li>
-      </ul>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Classical conditioning — all key terms</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><div class="highlight-box">Learning through association: a neutral stimulus comes to produce a response after being paired with a stimulus that naturally causes that response.</div><table class="compare-table"><tr><th>Term</th><th>Pavlov Example</th></tr><tr><td><strong>US</strong> — natural trigger</td><td>Food</td></tr><tr><td><strong>UR</strong> — natural response</td><td>Salivation to food</td></tr><tr><td><strong>NS</strong> — no response yet</td><td>Bell (before training)</td></tr><tr><td><strong>CS</strong> — learned trigger</td><td>Bell (after training)</td></tr><tr><td><strong>CR</strong> — learned response</td><td>Salivation to bell</td></tr></table><ul><li><strong>Generalization:</strong> Respond to stimuli similar to CS</li><li><strong>Discrimination:</strong> Respond only to specific CS</li><li><strong>Extinction:</strong> CR disappears when CS presented without US</li><li><strong>Spontaneous recovery:</strong> Extinguished CR reappears after rest</li></ul></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Operant conditioning — reinforcement, punishment, shaping</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <div class="highlight-box">Operant conditioning = learning from consequences of behavior (Skinner). Behavior increases when reinforced, decreases when punished.</div>
-      <table class="compare-table">
-        <tr><th>Type</th><th>What happens</th><th>Effect on behavior</th><th>Example</th></tr>
-        <tr><td><strong>Positive reinforcement</strong></td><td>Add something pleasant</td><td>Increase</td><td>Give candy for good grades</td></tr>
-        <tr><td><strong>Negative reinforcement</strong></td><td>Remove something unpleasant</td><td>Increase</td><td>Fasten seatbelt to stop beeping</td></tr>
-        <tr><td><strong>Positive punishment</strong></td><td>Add something unpleasant</td><td>Decrease</td><td>Extra homework for misbehaving</td></tr>
-        <tr><td><strong>Negative punishment</strong></td><td>Remove something pleasant</td><td>Decrease</td><td>Take away phone for bad behavior</td></tr>
-      </table>
-      <p><strong>Primary reinforcers:</strong> Innately satisfying (food, water, warmth). <strong>Secondary reinforcers:</strong> Learned value (money, grades, praise).</p>
-      <p><strong>Shaping:</strong> Reinforcing successive approximations toward a target behavior. <em>Example: rewarding a rat for moving toward a lever, then touching it, then pressing it.</em></p>
-      <p><strong>Observational learning:</strong> Learning by watching others (Bandura's Bobo doll study). No direct reinforcement required.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Operant conditioning — reinforcement & punishment</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><table class="compare-table"><tr><th>Type</th><th>Action</th><th>Effect</th><th>Example</th></tr><tr><td><strong>+ Reinforcement</strong></td><td>Add pleasant</td><td>↑ behavior</td><td>Candy for good grades</td></tr><tr><td><strong>− Reinforcement</strong></td><td>Remove unpleasant</td><td>↑ behavior</td><td>Seatbelt stops beeping</td></tr><tr><td><strong>+ Punishment</strong></td><td>Add unpleasant</td><td>↓ behavior</td><td>Extra homework for misbehaving</td></tr><tr><td><strong>− Punishment</strong></td><td>Remove pleasant</td><td>↓ behavior</td><td>Take away phone</td></tr></table><p><strong>Primary reinforcers:</strong> Innately satisfying (food, water). <strong>Secondary reinforcers:</strong> Learned value (money, praise).</p><p><strong>Continuous reinforcement:</strong> Reinforced every time → fast learning, fast extinction. <strong>Partial reinforcement:</strong> Reinforced sometimes → slower learning, very resistant to extinction.</p><p><strong>Shaping:</strong> Reinforcing successive approximations toward a target behavior.</p><p><strong>Token economy:</strong> A behavior modification system where desired behaviors earn tokens that can be exchanged for privileges or rewards — widely used in schools, therapy, and institutions.</p></div></div>
+
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Observational learning; latent learning</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Observational learning (Bandura):</strong> Learning by watching and imitating others — no direct reinforcement required. Demonstrated by Bandura's Bobo doll study, in which children who watched an adult hit an inflatable doll reproduced the aggressive behavior.</p><p><strong>Latent learning (Tolman):</strong> Learning that occurs without reinforcement and is not immediately demonstrated — it remains hidden until there is a reason to use it. <em>Example: rats who explored a maze without reward still learned its layout, performing better than unrewarded controls once food was added.</em></p><div class="info-box"><strong>Why it matters:</strong> Latent learning shows that reinforcement is not necessary for learning to occur — challenging strict behaviorism.</div></div></div>
 </div>
 
-<!-- ====== SECTION 5 ====== -->
+<!-- 05 MEMORY -->
 <div class="section" id="memory">
-  <div class="section-header">
-    <span class="section-num">05</span>
-    <span class="section-dot dot-5"></span>
-    <h2 class="section-title color-5">Memory</h2>
-  </div>
+  <div class="section-header"><span class="section-num">05</span><span class="section-dot dot-5"></span><h2 class="section-title color-5">Memory</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Three types of memory — capacity and duration</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <table class="compare-table">
-        <tr><th>Type</th><th>Duration</th><th>Capacity</th></tr>
-        <tr><td><strong>Sensory memory</strong></td><td>Fraction of a second (~0.5–3 sec)</td><td>Large (all sensory input briefly)</td></tr>
-        <tr><td><strong>Short-term memory (STM)</strong></td><td>~20–30 seconds without rehearsal</td><td>7 ± 2 items (Miller's Law)</td></tr>
-        <tr><td><strong>Long-term memory (LTM)</strong></td><td>Potentially unlimited / lifetime</td><td>Potentially unlimited</td></tr>
-      </table>
-      <p><strong>Chunking:</strong> Grouping items into meaningful units to expand STM capacity. <em>Example: remembering "FBI-CIA-NASA" as 3 chunks instead of 9 letters.</em></p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Three stages of memory: encoding, storage, retrieval</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Encoding:</strong> The process of getting information into memory — converting sensory input into a form the brain can store. Deeper, more meaningful encoding = stronger memory.</li><li><strong>Storage:</strong> Retaining encoded information over time in sensory, short-term, or long-term memory.</li><li><strong>Retrieval:</strong> Accessing and bringing stored information back to conscious awareness. Can be aided by cues that match the original encoding context.</li></ul><div class="info-box">Forgetting can occur at any stage — poor encoding, decay during storage, or failure to retrieve.</div></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Types of long-term memory; rehearsal types</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Semantic memory:</strong> General facts and knowledge ("Paris is the capital of France")</li>
-        <li><strong>Episodic memory:</strong> Personal experiences and events ("My first day of college")</li>
-        <li><strong>Procedural memory:</strong> Skills and how to do things ("How to ride a bike")</li>
-      </ul>
-      <ul>
-        <li><strong>Maintenance rehearsal:</strong> Simple repetition to keep info in STM (reciting a phone number). Less effective for LTM.</li>
-        <li><strong>Elaborative rehearsal:</strong> Connecting new info to existing knowledge. Far more effective for long-term retention.</li>
-      </ul>
-      <p><strong>Context-dependent memory:</strong> Recall is better when the retrieval environment matches the encoding environment (studying and testing in the same room).</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Three types of memory — duration & capacity</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><table class="compare-table"><tr><th>Type</th><th>Duration</th><th>Capacity</th></tr><tr><td><strong>Sensory</strong></td><td>~0.5–3 sec</td><td>Large (all sensory input)</td></tr><tr><td><strong>STM</strong></td><td>~20–30 sec</td><td>7 ± 2 items (Miller's Law)</td></tr><tr><td><strong>LTM</strong></td><td>Unlimited</td><td>Unlimited</td></tr></table><p><strong>Chunking:</strong> Grouping items into meaningful units to expand STM. <em>FBI-CIA-NASA = 3 chunks, not 9 letters.</em></p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Amnesia types; reasons we forget</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Anterograde amnesia:</strong> Cannot form NEW memories after brain injury (can still recall old memories)</li>
-        <li><strong>Retrograde amnesia:</strong> Cannot recall memories BEFORE brain injury</li>
-      </ul>
-      <p><strong>Why we forget:</strong></p>
-      <ul>
-        <li><strong>Blocking:</strong> Memory exists but can't be retrieved (tip-of-the-tongue phenomenon)</li>
-        <li><strong>Misattribution:</strong> Remembering something correctly but attributing it to the wrong source</li>
-        <li><strong>Suggestibility:</strong> Memories altered by misleading info from others (misinformation effect)</li>
-      </ul>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">LTM types; rehearsal types; context-dependent memory</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Semantic:</strong> General facts ("Paris is in France")</li><li><strong>Episodic:</strong> Personal experiences and events</li><li><strong>Procedural:</strong> How-to skills (riding a bike) — often unconscious</li><li><strong>Maintenance rehearsal:</strong> Simple repetition — keeps info in STM, weak for LTM</li><li><strong>Elaborative rehearsal:</strong> Connecting new info to existing knowledge — strongest for LTM</li></ul><p><strong>Context-dependent memory:</strong> Recall is better when the retrieval environment matches the encoding environment (studying and testing in the same room).</p></div></div>
+
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Amnesia types; blocking, misattribution, suggestibility</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Anterograde amnesia:</strong> Cannot form NEW memories after brain injury — old memories intact</li><li><strong>Retrograde amnesia:</strong> Cannot recall memories from BEFORE a brain injury</li><li><strong>Blocking (tip-of-the-tongue):</strong> Memory exists but temporarily cannot be retrieved</li><li><strong>Misattribution:</strong> Correct memory, wrong source — remembering a fact but attributing it to the wrong person/event</li><li><strong>Suggestibility (misinformation effect):</strong> Memories can be distorted by misleading post-event information — e.g., a leading question from a lawyer can alter eyewitness memory</li></ul></div></div>
 </div>
 
-<!-- ====== SECTION 6 ====== -->
+<!-- 06 DEVELOPMENT -->
 <div class="section" id="development">
-  <div class="section-header">
-    <span class="section-num">06</span>
-    <span class="section-dot dot-6"></span>
-    <h2 class="section-title" style="color:#fb923c;">Lifespan Development</h2>
-  </div>
+  <div class="section-header"><span class="section-num">06</span><span class="section-dot dot-6"></span><h2 class="section-title" style="color:#fb923c;">Development</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Three domains of development; teratogens; attachment styles</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p><strong>Three domains:</strong> Physical (body, brain, motor skills) | Cognitive (thinking, memory, language) | Social-Emotional (relationships, emotions, personality)</p>
-      <p><strong>Teratogens:</strong> Environmental agents that harm prenatal development (alcohol, drugs, radiation, certain infections). Damage depends on timing and dosage.</p>
-      <div class="highlight-box">
-        <strong>Attachment styles (Ainsworth's Strange Situation):</strong><br>
-        • <strong>Secure:</strong> Distressed when caregiver leaves, happy reunion, uses caregiver as safe base<br>
-        • <strong>Ambivalent (anxious):</strong> Very distressed at separation, ambivalent/angry at reunion — not easily soothed<br>
-        • <strong>Avoidant:</strong> Little distress at separation, ignores/avoids caregiver at reunion
-      </div>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Three domains; teratogens; nature vs. nurture</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Domains:</strong> Physical (body, brain, motor) | Cognitive (thinking, memory, language) | Social-Emotional (relationships, identity, emotions)</p><p><strong>Teratogens:</strong> Environmental agents that harm prenatal development (alcohol, drugs, radiation). Damage depends on timing and dosage — critical periods are most vulnerable.</p><div class="info-box"><strong>Nature vs. Nurture:</strong> The longstanding debate about whether behavior is primarily determined by genes (nature) or environment/experience (nurture). Modern view: both interact — genes set a range, environment shapes expression (gene-environment interaction).</div><p><strong>Cross-sectional study:</strong> Compares different age groups at the same point in time — fast but can't track individual change. <strong>Longitudinal study:</strong> Follows the same group over time — tracks real development but slow and expensive.</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Piaget's 4 stages of cognitive development</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <table class="compare-table">
-        <tr><th>Stage</th><th>Age</th><th>Key Feature</th></tr>
-        <tr><td><strong>Sensorimotor</strong></td><td>0–2 yrs</td><td>Learning through senses & actions; develops <strong>object permanence</strong> (objects exist when out of sight)</td></tr>
-        <tr><td><strong>Preoperational</strong></td><td>2–7 yrs</td><td>Language emerges; <strong>egocentric</strong> (can't see other's perspectives); lacks conservation</td></tr>
-        <tr><td><strong>Concrete Operational</strong></td><td>7–11 yrs</td><td>Understands <strong>conservation</strong> (amount unchanged despite appearance); logical thinking about concrete events</td></tr>
-        <tr><td><strong>Formal Operational</strong></td><td>12+ yrs</td><td><strong>Abstract thinking</strong>; hypothetical reasoning</td></tr>
-      </table>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Attachment styles (Ainsworth)</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><div class="highlight-box"><strong>Secure:</strong> Distressed at separation, joyful at reunion, uses caregiver as safe base to explore<br><strong>Ambivalent/Anxious:</strong> Very distressed at separation, angry/clingy at reunion — not soothed easily<br><strong>Avoidant:</strong> Little distress at separation, ignores or avoids caregiver at reunion</div><p>Attachment style is shaped by caregiver responsiveness and has lifelong effects on relationships and emotional regulation.</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Erikson's 8 psychosocial stages</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <table class="compare-table">
-        <tr><th>Stage</th><th>Age</th><th>Crisis</th></tr>
-        <tr><td>1</td><td>Infancy (0–1)</td><td>Trust vs. Mistrust</td></tr>
-        <tr><td>2</td><td>Toddler (1–3)</td><td>Autonomy vs. Shame/Doubt</td></tr>
-        <tr><td>3</td><td>Preschool (3–6)</td><td>Initiative vs. Guilt</td></tr>
-        <tr><td>4</td><td>School age (6–12)</td><td>Industry vs. Inferiority</td></tr>
-        <tr><td>5</td><td>Adolescence (12–18)</td><td>Identity vs. Role Confusion</td></tr>
-        <tr><td>6</td><td>Young adult (18–40)</td><td>Intimacy vs. Isolation</td></tr>
-        <tr><td>7</td><td>Middle adult (40–65)</td><td>Generativity vs. Stagnation</td></tr>
-        <tr><td>8</td><td>Late adult (65+)</td><td>Integrity vs. Despair</td></tr>
-      </table>
-      <p><strong>Adolescent brain:</strong> Amygdala (emotional reactivity) develops before the prefrontal cortex (reasoning/impulse control) → explains risk-taking and emotional behavior in teens.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Piaget's 4 stages</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><table class="compare-table"><tr><th>Stage</th><th>Age</th><th>Key Feature</th></tr><tr><td><strong>Sensorimotor</strong></td><td>0–2</td><td>Learns via senses/actions; achieves <strong>object permanence</strong></td></tr><tr><td><strong>Preoperational</strong></td><td>2–7</td><td>Language emerges; <strong>egocentric</strong>; no conservation</td></tr><tr><td><strong>Concrete Operational</strong></td><td>7–11</td><td>Understands <strong>conservation</strong>; logical about concrete things</td></tr><tr><td><strong>Formal Operational</strong></td><td>12+</td><td>Abstract & hypothetical thinking</td></tr></table></div></div>
+
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Erikson's 8 stages</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><table class="compare-table"><tr><th>#</th><th>Age</th><th>Crisis</th></tr><tr><td>1</td><td>0–1</td><td>Trust vs. Mistrust</td></tr><tr><td>2</td><td>1–3</td><td>Autonomy vs. Shame</td></tr><tr><td>3</td><td>3–6</td><td>Initiative vs. Guilt</td></tr><tr><td>4</td><td>6–12</td><td>Industry vs. Inferiority</td></tr><tr><td>5</td><td>12–18</td><td>Identity vs. Role Confusion</td></tr><tr><td>6</td><td>18–40</td><td>Intimacy vs. Isolation</td></tr><tr><td>7</td><td>40–65</td><td>Generativity vs. Stagnation</td></tr><tr><td>8</td><td>65+</td><td>Integrity vs. Despair</td></tr></table><p><strong>Adolescent brain:</strong> Amygdala (emotional reactivity) develops before the prefrontal cortex (reasoning, impulse control) → explains teen risk-taking and emotional intensity.</p></div></div>
 </div>
 
-<!-- ====== SECTION 7 ====== -->
+<!-- 07 PERSONALITY -->
 <div class="section" id="personality">
-  <div class="section-header">
-    <span class="section-num">07</span>
-    <span class="section-dot dot-7"></span>
-    <h2 class="section-title" style="color:#c084fc;">Personality</h2>
-  </div>
+  <div class="section-header"><span class="section-num">07</span><span class="section-dot dot-7"></span><h2 class="section-title" style="color:#c084fc;">Personality</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Freud's psychodynamic theory — 3 structures & defense mechanisms</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Id:</strong> Unconscious, primitive drives (pleasure principle) — wants immediate gratification</li>
-        <li><strong>Ego:</strong> Mediator; operates on reality principle — finds realistic ways to satisfy the id</li>
-        <li><strong>Superego:</strong> Internalized moral standards; guilt when rules are broken</li>
-      </ul>
-      <p><strong>Defense mechanisms:</strong> Unconscious strategies the ego uses to reduce anxiety (repression, denial, projection, rationalization).</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Freud: Id, Ego, Superego & defense mechanisms</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Id:</strong> Unconscious primitive drives — pleasure principle (wants immediate gratification)</li><li><strong>Ego:</strong> Mediator — reality principle (finds realistic ways to satisfy id)</li><li><strong>Superego:</strong> Internalized moral standards; produces guilt when violated</li></ul><p><strong>Defense mechanisms:</strong> Unconscious strategies the ego uses to reduce anxiety — repression (blocking out threatening thoughts), denial, projection (attributing own feelings to others), rationalization (making excuses).</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Big Five (OCEAN); locus of control; self-actualization; key terms</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <div class="highlight-box">
-        <strong>Big Five (OCEAN):</strong><br>
-        <strong>O</strong>penness | <strong>C</strong>onscientiousness | <strong>E</strong>xtraversion | <strong>A</strong>greeableness | <strong>N</strong>euroticism
-      </div>
-      <ul>
-        <li><strong>Self-actualization:</strong> Realizing one's full potential (Maslow/Rogers — top of hierarchy of needs)</li>
-        <li><strong>Internal locus of control:</strong> Belief that you control your own outcomes</li>
-        <li><strong>External locus of control:</strong> Belief that outside forces (luck, others) control outcomes</li>
-        <li><strong>Unconditional positive regard:</strong> Accepting someone fully without conditions (Rogers)</li>
-        <li><strong>Self-schema:</strong> Mental framework/beliefs about oneself</li>
-        <li><strong>Reciprocal determinism (Bandura):</strong> Behavior, personal factors, and environment all mutually influence each other</li>
-      </ul>
-      <p><strong>Tests:</strong> Self-report tests (e.g., MMPI) — questionnaires. Projective tests (e.g., Rorschach inkblot, TAT) — ambiguous stimuli reveal unconscious thoughts.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Big Five (OCEAN); locus of control; key humanistic terms</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><div class="highlight-box"><strong>OCEAN:</strong> Openness | Conscientiousness | Extraversion | Agreeableness | Neuroticism</div><ul><li><strong>Self-actualization:</strong> Reaching one's full potential (Maslow/Rogers)</li><li><strong>Internal locus of control:</strong> You control your own outcomes</li><li><strong>External locus of control:</strong> Outside forces (luck, others) control outcomes</li><li><strong>Unconditional positive regard:</strong> Full acceptance without conditions (Rogers)</li><li><strong>Reciprocal determinism (Bandura):</strong> Behavior, cognition, and environment mutually influence each other</li></ul></div></div>
+
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Self-report tests vs. projective tests</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Self-report tests (objective tests):</strong> Questionnaires where individuals rate or describe their own personality. <em>Examples: MMPI (Minnesota Multiphasic Personality Inventory), Big Five questionnaires.</em> Pros: standardized, reliable. Cons: subject to social desirability bias (people answer how they want to look).</p><p><strong>Projective tests:</strong> Present ambiguous stimuli — the person "projects" their unconscious thoughts and feelings onto them. <em>Examples: Rorschach inkblot test, TAT (Thematic Apperception Test).</em> Pros: may reveal unconscious material. Cons: low reliability and validity; highly subjective to interpret.</p></div></div>
 </div>
 
-<!-- ====== SECTION 8 ====== -->
+<!-- 08 SOCIAL -->
 <div class="section" id="social">
-  <div class="section-header">
-    <span class="section-num">08</span>
-    <span class="section-dot dot-8"></span>
-    <h2 class="section-title" style="color:#60a5fa;">Social Psychology</h2>
-  </div>
+  <div class="section-header"><span class="section-num">08</span><span class="section-dot dot-8"></span><h2 class="section-title" style="color:#60a5fa;">Social Psychology</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Attribution errors; conformity, compliance, obedience</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Personal (internal) attribution:</strong> Behavior caused by the person's character/traits</li>
-        <li><strong>Situational (external) attribution:</strong> Behavior caused by the situation</li>
-        <li><strong>Fundamental attribution error:</strong> We OVER-attribute others' behavior to personal factors and UNDER-attribute to situational factors</li>
-      </ul>
-      <ul>
-        <li><strong>Conformity:</strong> Adjusting behavior to match group norms (Asch line studies)</li>
-        <li><strong>Compliance:</strong> Agreeing to a direct request from someone (not necessarily authority)</li>
-        <li><strong>Obedience:</strong> Following orders from an authority figure</li>
-      </ul>
-      <div class="warn-box"><strong>Milgram's obedience study:</strong> Participants administered (fake) electric shocks to strangers when ordered by an authority figure in a lab coat. ~65% went to maximum voltage — showed power of authority over behavior.</div>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Attribution; conformity, compliance, obedience</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Internal attribution:</strong> Behavior caused by the person's character/traits</li><li><strong>External attribution:</strong> Behavior caused by the situation</li><li><strong>Fundamental attribution error:</strong> Over-attribute others' behavior to personal factors; under-attribute to situational factors</li><li><strong>Conformity:</strong> Matching group behavior (Asch line study)</li><li><strong>Compliance:</strong> Following a direct request</li><li><strong>Obedience:</strong> Following authority orders</li></ul><div class="warn-box"><strong>Milgram:</strong> ~65% of participants delivered maximum (fake) electric shocks when ordered by an authority figure in a lab coat — demonstrated the power of situational authority over individual moral judgment.</div></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Cognitive dissonance; bystander effect; stereotypes, prejudice, discrimination</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Cognitive dissonance:</strong> Discomfort from holding conflicting beliefs or behaving inconsistently with beliefs → motivates attitude change</li>
-        <li><strong>Bystander intervention effect:</strong> People are less likely to help in an emergency when others are present (diffusion of responsibility)</li>
-        <li><strong>Stereotype:</strong> Generalized belief about a group</li>
-        <li><strong>Prejudice:</strong> Negative attitude/feeling toward a group</li>
-        <li><strong>Discrimination:</strong> Negative behavior/action toward a group</li>
-        <li><strong>Self-fulfilling prophecy:</strong> A belief that causes itself to become true through behavior (teacher expects student to fail → student fails)</li>
-      </ul>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Cognitive dissonance; bystander effect; prejudice & stereotypes</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Cognitive dissonance:</strong> Discomfort from holding conflicting beliefs or acting against beliefs → motivates attitude change to restore consistency</li><li><strong>Bystander effect:</strong> Less likely to help in an emergency when others are present — diffusion of responsibility. The more bystanders, the less any single person feels responsible.</li><li><strong>Stereotype:</strong> Generalized belief about a group</li><li><strong>Prejudice:</strong> Negative attitude/feeling toward a group</li><li><strong>Discrimination:</strong> Negative behavior toward a group</li><li><strong>Self-fulfilling prophecy:</strong> A belief that causes itself to become true through behavior it generates</li></ul></div></div>
 </div>
 
-<!-- ====== SECTION 9 ====== -->
+<!-- 09 DISORDERS -->
 <div class="section" id="disorders">
-  <div class="section-header">
-    <span class="section-num">09</span>
-    <span class="section-dot dot-9"></span>
-    <h2 class="section-title" style="color:#2dd4bf;">Psychological Disorders</h2>
-  </div>
+  <div class="section-header"><span class="section-num">09</span><span class="section-dot dot-9"></span><h2 class="section-title" style="color:#2dd4bf;">Psychological Disorders</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">DSM-5; diathesis-stress model; biopsychosocial approach</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p><strong>DSM-5:</strong> Diagnostic and Statistical Manual of Mental Disorders, 5th ed. — the standard classification system for psychological disorders used by clinicians.</p>
-      <p><strong>Diathesis-stress model:</strong> Disorders arise from a combination of biological predisposition (diathesis) + environmental stressors. Neither alone is sufficient.</p>
-      <p><strong>Biopsychosocial approach:</strong> Considers biological (genetics, brain), psychological (thoughts, emotions), and social (culture, relationships) factors together.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">DSM-5; diathesis-stress model; biopsychosocial approach</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>DSM-5:</strong> Diagnostic and Statistical Manual of Mental Disorders — standard classification system for psychological disorders used by clinicians.</p><p><strong>Diathesis-stress model:</strong> Disorders arise from a biological predisposition (diathesis) + environmental stressors. Neither alone is sufficient — both are required.</p><p><strong>Biopsychosocial approach:</strong> Considers biological (genetics, brain chemistry), psychological (thoughts, emotions, behavior), and social (culture, relationships, stressors) factors together.</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Anxiety disorders: GAD, panic disorder, specific phobias</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>Generalized Anxiety Disorder (GAD):</strong> Persistent, excessive worry about multiple life areas for 6+ months; restlessness, fatigue, difficulty concentrating</li>
-        <li><strong>Panic Disorder:</strong> Recurrent unexpected panic attacks (intense fear, chest pain, shortness of breath, feeling of doom) + worry about future attacks</li>
-        <li><strong>Specific Phobia:</strong> Intense, irrational fear of a specific object/situation that is disproportionate to actual danger</li>
-      </ul>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Anxiety disorders: GAD, panic disorder, specific phobias</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>GAD:</strong> Persistent, excessive worry about multiple areas for 6+ months; fatigue, restlessness, difficulty concentrating</li><li><strong>Panic Disorder:</strong> Recurrent unexpected panic attacks (intense fear, chest pain, shortness of breath, sense of doom) + ongoing worry about future attacks</li><li><strong>Specific Phobia:</strong> Intense, irrational, persistent fear of a specific object or situation disproportionate to actual danger</li></ul></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">OCD; Major Depressive Disorder; learned helplessness</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <ul>
-        <li><strong>OCD — Obsessions:</strong> Unwanted, intrusive, recurring thoughts (e.g., fear of contamination)</li>
-        <li><strong>OCD — Compulsions:</strong> Repetitive behaviors performed to reduce obsession anxiety (e.g., excessive hand-washing)</li>
-      </ul>
-      <p><strong>Major Depressive Episode symptoms:</strong> Depressed mood, loss of interest/pleasure, weight changes, sleep disturbance, fatigue, feelings of worthlessness, difficulty concentrating, thoughts of death — lasting 2+ weeks.</p>
-      <p><strong>Learned helplessness:</strong> After repeated uncontrollable negative events, a person gives up trying to change their situation — linked to depression.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">OCD; Major Depressive Disorder; learned helplessness</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>OCD Obsessions:</strong> Unwanted, intrusive recurring thoughts (e.g., contamination fear)</li><li><strong>OCD Compulsions:</strong> Repetitive behaviors to reduce obsession-related anxiety (e.g., excessive hand-washing)</li></ul><p><strong>MDD symptoms (5+ for 2+ weeks):</strong> Depressed mood, loss of interest/pleasure, weight/sleep changes, fatigue, worthlessness, poor concentration, thoughts of death.</p><p><strong>Learned helplessness (Seligman):</strong> After repeated uncontrollable negative events, a person gives up trying to change their situation — a key cognitive model of depression.</p></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Bipolar disorder; schizophrenia; personality disorders; neurodevelopmental disorders</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p><strong>Bipolar disorder:</strong> Episodes of mania (elevated mood, grandiosity, decreased need for sleep, impulsivity) alternating with depression.</p>
-      <p><strong>Schizophrenia:</strong></p>
-      <ul>
-        <li><strong>Positive symptoms:</strong> ADDED experiences — hallucinations (false perceptions, e.g., hearing voices) and delusions (false beliefs, e.g., being persecuted)</li>
-        <li><strong>Negative symptoms:</strong> REDUCED functions — flat affect, poverty of speech, social withdrawal, lack of motivation</li>
-      </ul>
-      <p><strong>Borderline PD:</strong> Unstable relationships, identity, and moods; fear of abandonment; impulsivity; self-harm</p>
-      <p><strong>Antisocial PD:</strong> Persistent disregard for others' rights; deceitfulness, lack of remorse, impulsivity, aggression</p>
-      <p><strong>ASD (Autism Spectrum):</strong> Deficits in social communication; restricted, repetitive behaviors; varies in severity</p>
-      <p><strong>ADHD:</strong> Inattention and/or hyperactivity-impulsivity that impairs functioning; onset in childhood</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Bipolar; schizophrenia; personality disorders; ADHD/ASD</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Bipolar disorder:</strong> Alternating episodes of mania (elevated mood, grandiosity, decreased sleep, impulsivity) and depression.</p><p><strong>Schizophrenia positive symptoms:</strong> Hallucinations (false perceptions — hearing voices) + delusions (fixed false beliefs).<br><strong>Negative symptoms:</strong> Flat affect, poverty of speech, social withdrawal, avolition (lack of motivation).</p><p><strong>Borderline PD:</strong> Unstable relationships/identity/moods, fear of abandonment, impulsivity, self-harm.<br><strong>Antisocial PD:</strong> Disregard for others' rights, deceitfulness, lack of remorse.</p><p><strong>ASD:</strong> Deficits in social communication; restricted, repetitive behaviors; varies in severity.<br><strong>ADHD:</strong> Inattention and/or hyperactivity-impulsivity impairing functioning; onset in childhood.</p></div></div>
 </div>
 
-<!-- ====== SECTION 10 ====== -->
+<!-- 10 THERAPY -->
 <div class="section" id="therapy">
-  <div class="section-header">
-    <span class="section-num">10</span>
-    <span class="section-dot dot-1"></span>
-    <h2 class="section-title color-1">Therapy</h2>
-  </div>
+  <div class="section-header"><span class="section-num">10</span><span class="section-dot dot-1"></span><h2 class="section-title color-1">Therapy</h2></div>
   <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Biological therapy vs. psychotherapy; major schools</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p><strong>Biological therapy:</strong> Treats disorders with physical/medical means — medications (antidepressants, antipsychotics), ECT, TMS.</p>
-      <p><strong>Psychotherapy:</strong> Psychological treatment involving talking and behavioral techniques.</p>
-      <table class="compare-table">
-        <tr><th>Type</th><th>Focus</th></tr>
-        <tr><td><strong>Psychoanalysis/Psychodynamic</strong></td><td>Explore unconscious conflicts, early childhood; free association, dream analysis</td></tr>
-        <tr><td><strong>Humanistic</strong></td><td>Foster growth, self-acceptance; unconditional positive regard (Rogers)</td></tr>
-        <tr><td><strong>Behavior therapy</strong></td><td>Change maladaptive behaviors using conditioning principles</td></tr>
-        <tr><td><strong>CBT</strong></td><td>Change negative thoughts AND behaviors; most evidence-based</td></tr>
-      </table>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Biological therapy vs. psychotherapy; major approaches</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Biological therapy:</strong> Treats disorders with physical/medical means — medications (antidepressants, antipsychotics, anxiolytics), ECT (electroconvulsive therapy for severe depression), TMS (transcranial magnetic stimulation).</p><table class="compare-table"><tr><th>Type</th><th>Focus</th></tr><tr><td><strong>Psychodynamic</strong></td><td>Unconscious conflicts; free association, dream analysis</td></tr><tr><td><strong>Humanistic</strong></td><td>Self-acceptance, growth; unconditional positive regard</td></tr><tr><td><strong>Behavior therapy</strong></td><td>Change maladaptive behaviors via conditioning</td></tr><tr><td><strong>CBT</strong></td><td>Change negative thoughts AND behaviors — most evidence-based</td></tr></table></div></div>
 
-  <div class="card">
-    <div class="card-q" onclick="toggle(this)">
-      <span class="q-text">Rogers' client-centered therapy; behavior therapies; CBT; group therapy</span><span class="toggle-icon">▶</span>
-    </div>
-    <div class="card-a">
-      <p><strong>Rogers' client-centered therapy:</strong> Therapist provides unconditional positive regard, empathy, and genuineness. Goal: help client reach self-actualization and self-acceptance.</p>
-      <p><strong>Behavior therapy techniques:</strong></p>
-      <ul>
-        <li><strong>Systematic desensitization:</strong> Gradually expose client to feared stimulus while maintaining relaxation (treats phobias)</li>
-        <li><strong>Exposure and response prevention:</strong> Confront feared stimulus and resist compulsive response (used for OCD)</li>
-        <li><strong>Operant procedures:</strong> Use reinforcement/punishment to shape target behaviors (token economies)</li>
-      </ul>
-      <p><strong>Cognitive Behavioral Therapy (CBT):</strong> Identifies and challenges distorted thinking patterns; changes both cognitions and behaviors. Most empirically supported therapy.</p>
-      <p><strong>Group therapy:</strong> Multiple clients treated together. Benefits: social support, learn from others, feel less alone, cost-effective, practice social skills.</p>
-    </div>
-  </div>
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Psychodynamic techniques: free association & dream analysis</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><p><strong>Free association:</strong> The client says whatever comes to mind without censoring — the therapist listens for recurring themes, slips, and patterns that reveal unconscious conflicts.</p><p><strong>Dream analysis:</strong> Freud believed dreams contain both manifest content (what literally happens in the dream) and latent content (the hidden unconscious meaning beneath the surface).</p><p><strong>Goal of psychodynamic therapy:</strong> Bring unconscious material into conscious awareness → achieve insight → resolve inner conflict and reduce symptoms.</p></div></div>
+
+  <div class="card"><div class="card-q" onclick="toggle(this)"><span class="q-text">Behavior therapies; token economy; CBT; group therapy</span><span class="toggle-icon">▶</span></div>
+  <div class="card-a"><ul><li><strong>Client-centered therapy (Rogers):</strong> Unconditional positive regard + empathy + genuineness → self-actualization</li><li><strong>Systematic desensitization:</strong> Gradually expose client to feared stimulus while maintaining relaxation (treats phobias)</li><li><strong>Exposure & response prevention:</strong> Confront feared trigger, resist compulsion (treats OCD)</li><li><strong>Token economy:</strong> Desired behaviors earn tokens redeemable for privileges/rewards — used in schools, psychiatric wards, and rehabilitation settings</li><li><strong>CBT:</strong> Identifies and challenges cognitive distortions; changes both thoughts and behaviors. Most empirically supported therapy overall.</li><li><strong>Group therapy:</strong> Multiple clients treated together — social support, shared experience, reduced isolation, cost-effective</li></ul></div></div>
 </div>
 
 </main>
+</div>
 
-<footer>
-  Good luck on your exam! You've got this. 🧠
-</footer>
+<!-- ============ FLASHCARD VIEW ============ -->
+<div id="flashcard-view">
+  <div class="fc-filter-wrap">
+    <button class="fc-filter-btn on" onclick="filterCards('all',this)">All</button>
+    <button class="fc-filter-btn" onclick="filterCards('Intro & Methods',this)">Intro</button>
+    <button class="fc-filter-btn" onclick="filterCards('Neuroscience',this)">Neuro</button>
+    <button class="fc-filter-btn" onclick="filterCards('Sensation',this)">Sensation</button>
+    <button class="fc-filter-btn" onclick="filterCards('Learning',this)">Learning</button>
+    <button class="fc-filter-btn" onclick="filterCards('Memory',this)">Memory</button>
+    <button class="fc-filter-btn" onclick="filterCards('Development',this)">Dev</button>
+    <button class="fc-filter-btn" onclick="filterCards('Personality',this)">Personality</button>
+    <button class="fc-filter-btn" onclick="filterCards('Social',this)">Social</button>
+    <button class="fc-filter-btn" onclick="filterCards('Disorders',this)">Disorders</button>
+    <button class="fc-filter-btn" onclick="filterCards('Therapy',this)">Therapy</button>
+  </div>
+  <div class="fc-top-row">
+    <div class="fc-counter" id="fcCounter"></div>
+    <button class="fc-shuffle-btn" onclick="shuffleCards()">⇌ Shuffle</button>
+  </div>
+  <div class="fc-progress-bar"><div class="fc-progress-fill" id="fcProgress"></div></div>
+  <div id="fcDeck">
+    <div class="fc-scene" id="fcScene" onclick="flipCard()">
+      <div class="fc-card-inner">
+        <div class="fc-front">
+          <div class="fc-label">Term / Concept</div>
+          <div class="fc-term" id="fcTerm"></div>
+          <div class="fc-category" id="fcCat"></div>
+          <div class="fc-hint">tap to reveal →</div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-label">Definition</div>
+          <div class="fc-def" id="fcDef"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="fc-nav-btn" id="fcPrev" onclick="prevCard()">←</button>
+      <button class="fc-flip-btn" onclick="flipCard()">Flip Card</button>
+      <button class="fc-nav-btn" id="fcNext" onclick="nextCard()">→</button>
+    </div>
+    <div class="fc-rating">
+      <button class="fc-rate-btn hard" onclick="rateCard('hard')">😓<br>Still Learning</button>
+      <button class="fc-rate-btn good" onclick="rateCard('good')">🙂<br>Almost</button>
+      <button class="fc-rate-btn easy" onclick="rateCard('easy')">✅<br>Got It</button>
+    </div>
+    <div class="fc-stats">
+      <span><span class="dot" style="background:#f87171"></span><span id="statHard">0</span> learning</span>
+      <span><span class="dot" style="background:#f5a623"></span><span id="statGood">0</span> almost</span>
+      <span><span class="dot" style="background:#34d399"></span><span id="statEasy">0</span> got it</span>
+    </div>
+  </div>
+  <div id="fcDone" style="display:none;" class="fc-done">
+    <h2>🎉 Done!</h2>
+    <p id="fcDoneSummary"></p>
+    <button class="fc-restart-btn" onclick="restartDeck()">↺ Restart</button>
+  </div>
+</div>
+
+<footer>Good luck on your exam! 🧠</footer>
 
 <script>
-function toggle(btn) {
-  const card = btn.closest('.card');
-  card.classList.toggle('open');
+function toggle(btn){btn.closest('.card').classList.toggle('open')}
+function expandAll(btn){
+  const sec=btn.closest('.section'),cards=sec.querySelectorAll('.card');
+  const allOpen=[...cards].every(c=>c.classList.contains('open'));
+  cards.forEach(c=>allOpen?c.classList.remove('open'):c.classList.add('open'));
+  btn.textContent=allOpen?'Expand All':'Collapse All';
+}
+function showView(v){
+  document.getElementById('study-view').style.display=v==='study'?'block':'none';
+  document.getElementById('flashcard-view').style.display=v==='flashcards'?'block':'none';
+  document.getElementById('sectionNav').style.display=v==='study'?'flex':'none';
+  document.querySelectorAll('.mode-tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&v==='study')||(i===1&&v==='flashcards')));
 }
 
-function expandAll(btn) {
-  const section = btn.closest('.section');
-  const cards = section.querySelectorAll('.card');
-  const allOpen = [...cards].every(c => c.classList.contains('open'));
-  cards.forEach(c => allOpen ? c.classList.remove('open') : c.classList.add('open'));
-  btn.textContent = allOpen ? 'Expand All' : 'Collapse All';
+const ALL_CARDS=[
+  // ── INTRO & METHODS ──
+  {cat:'Intro & Methods',term:'Psychology',def:'The scientific study of behavior and mental processes.'},
+  {cat:'Intro & Methods',term:'Critical Thinking',def:'Evaluating claims using evidence, logic, and skepticism — asking questions, examining evidence, analyzing assumptions, and drawing careful conclusions rather than accepting things at face value.'},
+  {cat:'Intro & Methods',term:'Independent Variable (IV)',def:'The variable a researcher manipulates — it is the presumed cause. Example: amount of sleep given to participants.'},
+  {cat:'Intro & Methods',term:'Dependent Variable (DV)',def:'The variable that is measured — the presumed effect or outcome. Example: test score after different amounts of sleep.'},
+  {cat:'Intro & Methods',term:'Experimental vs. Control Group',def:'Experimental group receives the treatment/manipulation. Control group receives no treatment and serves as the baseline for comparison.'},
+  {cat:'Intro & Methods',term:'Random Assignment',def:'Randomly placing participants into experimental or control groups — controls for pre-existing differences between people, allowing cause-and-effect conclusions.'},
+  {cat:'Intro & Methods',term:'Hypothesis',def:'A testable prediction about the relationship between variables. Example: "Students who sleep 8 hours will score higher on exams than those who sleep 4 hours."'},
+  {cat:'Intro & Methods',term:'Operational Definition',def:'A precise, measurable description of how a variable is defined in a specific study. Example: "anxiety" = score of 15+ on the GAD-7 questionnaire.'},
+  {cat:'Intro & Methods',term:'Placebo Effect',def:'A participant\'s belief that they are receiving a real treatment causes real psychological or physical changes — even without any active treatment.'},
+  {cat:'Intro & Methods',term:'Double-Blind Design',def:'Neither the participants NOR the researchers interacting with them know who is in the experimental vs. control group — eliminates both participant and researcher bias.'},
+  {cat:'Intro & Methods',term:'Replication & Peer Review',def:'Replication = repeating a study to verify its results. A finding is only reliable when independently replicated. Peer review = expert evaluation of research before publication to ensure quality and validity.'},
+  {cat:'Intro & Methods',term:'Correlation',def:'A statistical relationship between two variables. Does NOT prove causation — could be due to the directionality problem or a third variable.'},
+  {cat:'Intro & Methods',term:'Directionality Problem',def:'In a correlation, we cannot tell which variable is the cause and which is the effect. Example: depression and inactivity correlate, but which causes which?'},
+  {cat:'Intro & Methods',term:'Third Variable Problem',def:'A hidden third variable may cause both correlated variables. Example: hot weather causes both ice cream sales AND drowning rates to rise — neither causes the other.'},
+  {cat:'Intro & Methods',term:'Survey',def:'A self-report questionnaire administered to many people to gather data on attitudes, opinions, or behaviors. Quick and broad but vulnerable to social desirability bias.'},
+  {cat:'Intro & Methods',term:'Observational Study',def:'Researcher watches and records behavior without intervening — no manipulation of variables, so cannot establish cause and effect.'},
+  {cat:'Intro & Methods',term:'Case Study',def:'An in-depth investigation of a single individual or small group — provides rich, detailed data but limited generalizability to others.'},
+  {cat:'Intro & Methods',term:'Population vs. Sample',def:'Population = entire group of interest. Sample = subset actually studied. A good sample is representative of the population, ideally selected randomly.'},
+  {cat:'Intro & Methods',term:'Behaviorism',def:'School of thought holding that only observable behavior matters — behavior is shaped by environmental conditioning, not internal mental states. Key figures: Watson, Skinner.'},
+  {cat:'Intro & Methods',term:'Gestalt Psychology',def:'The whole is greater than the sum of its parts — we perceive sensory input as organized, meaningful wholes rather than isolated elements.'},
+  {cat:'Intro & Methods',term:'Humanistic Psychology',def:'Emphasizes free will, personal growth, and self-actualization. Focuses on conscious experience and human potential. Key figures: Maslow and Rogers.'},
+  {cat:'Intro & Methods',term:'Cognitive Psychology',def:'Mental processes — thinking, memory, problem-solving, perception — shape behavior. The mind processes information much like a computer.'},
+  {cat:'Intro & Methods',term:'Psychodynamic Psychology',def:'Behavior is driven by unconscious conflicts, desires, and early childhood experiences. Focus on the role of the unconscious mind. Founded by Freud.'},
+  {cat:'Intro & Methods',term:'Fundamental Attribution Error',def:'Tendency to over-attribute others\' behavior to personal/internal factors (their character) and under-attribute to situational factors (the context). We are less prone to this with ourselves.'},
+  // ── NEUROSCIENCE ──
+  {cat:'Neuroscience',term:'Dendrites',def:'Branch-like extensions of a neuron that receive incoming signals from other neurons and transmit them toward the cell body.'},
+  {cat:'Neuroscience',term:'Axon',def:'Long fiber that carries the electrical action potential away from the cell body toward the terminal buds.'},
+  {cat:'Neuroscience',term:'Myelin Sheath',def:'Fatty insulating coating around the axon that speeds up signal transmission and prevents signal loss. Damage causes disorders like multiple sclerosis.'},
+  {cat:'Neuroscience',term:'Synapse',def:'The tiny gap between two neurons where chemical communication via neurotransmitters occurs. Signals cross from terminal buds to dendrites of the next neuron.'},
+  {cat:'Neuroscience',term:'Action Potential',def:'The all-or-nothing electrical impulse that travels down a neuron\'s axon when the neuron fires. Either fires at full strength or not at all.'},
+  {cat:'Neuroscience',term:'Neurotransmitters',def:'Chemical messengers released from terminal buds that cross the synapse and bind to receptors on the receiving neuron, either exciting or inhibiting it.'},
+  {cat:'Neuroscience',term:'Sympathetic Nervous System',def:'"Fight or flight" — activated by stress or danger. Accelerates heart rate, dilates pupils, diverts blood to muscles, inhibits digestion.'},
+  {cat:'Neuroscience',term:'Parasympathetic Nervous System',def:'"Rest and digest" — active during calm states. Slows heart rate, constricts pupils, promotes digestion and energy restoration.'},
+  {cat:'Neuroscience',term:'Thalamus',def:'The brain\'s relay station — receives sensory information (except smell) and routes it to the appropriate cortical areas for processing.'},
+  {cat:'Neuroscience',term:'Hypothalamus',def:'Regulates basic biological drives: hunger, thirst, sex, body temperature, and sleep. Controls the pituitary gland — the bridge between nervous and endocrine systems.'},
+  {cat:'Neuroscience',term:'Amygdala',def:'Brain structure involved in emotional processing — especially fear, aggression, and the fight-or-flight response. Part of the limbic system.'},
+  {cat:'Neuroscience',term:'Hippocampus',def:'Critical for forming new long-term memories and spatial navigation. Damage (e.g., H.M.) causes anterograde amnesia — cannot form new declarative memories.'},
+  {cat:'Neuroscience',term:'Frontal Lobe / Motor Cortex',def:'Frontal lobe: planning, decision-making, impulse control, personality. Motor cortex (rear of frontal lobe): controls voluntary body movement.'},
+  {cat:'Neuroscience',term:'Parietal Lobe / Somatosensory Cortex',def:'Processes touch, pain, temperature, pressure, and body position. The somatosensory cortex maps sensations from the entire body.'},
+  {cat:'Neuroscience',term:'Occipital Lobe / Visual Cortex',def:'Located at the back of the brain — processes all visual information from the eyes. Damage causes cortical blindness.'},
+  {cat:'Neuroscience',term:'Temporal Lobe / Auditory Cortex',def:'Processes hearing and language; also contains the hippocampus and amygdala. Damage can cause language disorders (aphasia).'},
+  {cat:'Neuroscience',term:'Corpus Callosum',def:'A thick bundle of nerve fibers connecting the left and right cerebral hemispheres, allowing them to communicate and coordinate.'},
+  {cat:'Neuroscience',term:'Cerebellum',def:'Controls coordination, balance, and fine motor movements. Also involved in timing and some cognitive functions. Damage causes poor coordination (ataxia).'},
+  {cat:'Neuroscience',term:'Medulla',def:'Controls vital automatic functions: breathing, heart rate, and blood pressure. Located in the brainstem — damage is often fatal.'},
+  {cat:'Neuroscience',term:'Substantia Nigra',def:'Produces dopamine; involved in smooth, coordinated voluntary movement. Degeneration of this area causes Parkinson\'s disease.'},
+  {cat:'Neuroscience',term:'Neuroplasticity',def:'The brain\'s ability to reorganize itself by forming new neural connections throughout life — especially in response to learning, experience, or injury. Strongest in early childhood.'},
+  {cat:'Neuroscience',term:'Endocrine System',def:'Communicates via hormones secreted by glands into the bloodstream. Slower than neural signals but longer-lasting. The hypothalamus controls the pituitary, which regulates most other glands.'},
+  {cat:'Neuroscience',term:'Pituitary Gland',def:'The "master gland" of the endocrine system — controlled by the hypothalamus. Releases hormones that regulate other glands (thyroid, adrenal, gonads) and controls growth.'},
+  {cat:'Neuroscience',term:'Adrenal Glands',def:'Located above the kidneys. Release adrenaline (epinephrine) and cortisol in response to stress — triggering the fight-or-flight response.'},
+  // ── SENSATION ──
+  {cat:'Sensation',term:'Sensation',def:'Detection of physical stimuli by sensory organs — the raw data input before any interpretation by the brain.'},
+  {cat:'Sensation',term:'Perception',def:'The brain\'s active process of interpreting, organizing, and giving meaning to sensory signals — turning raw data into a meaningful experience.'},
+  {cat:'Sensation',term:'Transduction',def:'Converting physical stimulus energy (light waves, sound waves, pressure, chemicals) into electrical signals the brain can process.'},
+  {cat:'Sensation',term:'Bottom-Up Processing',def:'Perception that starts with raw sensory data and builds upward to a full interpretation. Data-driven, no prior knowledge needed. Example: sounding out an unfamiliar word letter by letter.'},
+  {cat:'Sensation',term:'Top-Down Processing',def:'Perception driven by prior knowledge, context, expectations, and experience. Example: reading a misspelled word correctly because context fills in the gap.'},
+  {cat:'Sensation',term:'Absolute Threshold',def:'The minimum intensity of a stimulus that can be detected 50% of the time under ideal conditions.'},
+  {cat:'Sensation',term:'Just Noticeable Difference (JND)',def:'The minimum change in stimulus intensity needed to notice a difference 50% of the time. Also called the difference threshold. Larger stimuli require bigger changes to be noticed (Weber\'s Law).'},
+  {cat:'Sensation',term:'Sensory Adaptation',def:'Diminished sensitivity to a constant or unchanging stimulus over time. Example: you stop noticing the hum of a refrigerator, the smell of your own home, or the feeling of clothes on your skin.'},
+  {cat:'Sensation',term:'Gestalt Principles',def:'Rules the brain uses to organize sensory input into wholes: Figure-ground (foreground vs. background), Proximity (nearby things group together), Similarity, Closure (filling in gaps), Continuity (smooth patterns preferred).'},
+  {cat:'Sensation',term:'Kinesthetic Sense',def:'The sense of body position, limb movement, and muscle tension. Also called proprioception. Allows you to know where your limbs are without looking at them.'},
+  {cat:'Sensation',term:'Vestibular Sense',def:'Sense of balance, spatial orientation, and head movement — processed by the semicircular canals in the inner ear. Disruption causes dizziness and motion sickness.'},
+  {cat:'Sensation',term:'Monocular Depth Cues',def:'Depth cues that work with one eye: linear perspective (parallel lines converge), relative size (smaller = farther), overlap, texture gradient (less detail = farther), motion parallax (closer objects move faster).'},
+  {cat:'Sensation',term:'Binocular Depth Cues',def:'Depth cues requiring both eyes: retinal disparity (each eye gets slightly different image — brain computes depth from the difference) and convergence (eyes turn inward for close objects).'},
+  // ── LEARNING ──
+  {cat:'Learning',term:'Classical Conditioning',def:'Learning through association — a neutral stimulus (NS) becomes a conditioned stimulus (CS) by being repeatedly paired with an unconditioned stimulus (US) that already triggers a response. Discovered by Pavlov.'},
+  {cat:'Learning',term:'Unconditioned Stimulus (US)',def:'A stimulus that naturally and automatically triggers a response without any prior learning. (Pavlov: food → naturally causes salivation)'},
+  {cat:'Learning',term:'Unconditioned Response (UR)',def:'The natural, unlearned response to the unconditioned stimulus. (Pavlov: salivation in response to food)'},
+  {cat:'Learning',term:'Neutral Stimulus (NS)',def:'A stimulus that initially produces no conditioned response before conditioning begins. (Pavlov: bell before training — produces no salivation)'},
+  {cat:'Learning',term:'Conditioned Stimulus (CS)',def:'A previously neutral stimulus that, after repeated pairing with the US, now triggers the conditioned response on its own. (Pavlov: bell after training)'},
+  {cat:'Learning',term:'Conditioned Response (CR)',def:'The learned response elicited by the conditioned stimulus alone. Often weaker than the UR. (Pavlov: salivating to the bell)'},
+  {cat:'Learning',term:'Extinction (Classical Conditioning)',def:'Gradual weakening and disappearance of the CR when the CS is repeatedly presented without the US. The association fades without reinforcement.'},
+  {cat:'Learning',term:'Spontaneous Recovery',def:'The reappearance of an extinguished conditioned response after a rest period — without additional conditioning trials. Shows the original learning was never fully erased.'},
+  {cat:'Learning',term:'Stimulus Generalization',def:'Tendency to show a conditioned response to stimuli that are similar (but not identical) to the original CS. Example: fear of one dog generalizes to all dogs.'},
+  {cat:'Learning',term:'Stimulus Discrimination',def:'Learned ability to distinguish the CS from similar stimuli and respond only to the specific CS — the opposite of generalization.'},
+  {cat:'Learning',term:'Positive Reinforcement',def:'Adding a pleasant stimulus after a behavior → increases the likelihood of that behavior. Example: giving praise or a reward after a child completes homework.'},
+  {cat:'Learning',term:'Negative Reinforcement',def:'Removing an unpleasant stimulus after a behavior → increases that behavior. Example: fastening your seatbelt stops the annoying beeping. NOT the same as punishment.'},
+  {cat:'Learning',term:'Positive Punishment',def:'Adding an unpleasant stimulus after a behavior → decreases that behavior. Example: getting a speeding ticket, scolding a child.'},
+  {cat:'Learning',term:'Negative Punishment',def:'Removing a pleasant stimulus after a behavior → decreases that behavior. Example: taking away a teenager\'s phone or car privileges.'},
+  {cat:'Learning',term:'Primary vs. Secondary Reinforcers',def:'Primary reinforcers are innately satisfying (food, water, warmth — no learning required). Secondary (conditioned) reinforcers have learned value — money, grades, praise gain meaning through association with primary reinforcers.'},
+  {cat:'Learning',term:'Continuous vs. Partial Reinforcement',def:'Continuous: reinforced every single time → fast learning, fast extinction. Partial (intermittent): reinforced only sometimes → slower learning but very resistant to extinction. The slot machine effect.'},
+  {cat:'Learning',term:'Shaping',def:'Reinforcing successive approximations toward a desired target behavior — used to teach complex new behaviors step by step. Example: rewarding a rat first for approaching a lever, then touching it, then pressing it.'},
+  {cat:'Learning',term:'Token Economy',def:'A behavior modification system where desired behaviors earn tokens that can later be exchanged for privileges or rewards. Used in classrooms, psychiatric wards, and rehabilitation programs.'},
+  {cat:'Learning',term:'Observational Learning (Bandura)',def:'Learning by watching and imitating others — no direct reinforcement needed. Bandura\'s Bobo doll study: children who watched an adult hit an inflatable doll reproduced the aggressive behavior.'},
+  {cat:'Learning',term:'Latent Learning (Tolman)',def:'Learning that occurs without reinforcement and is not immediately demonstrated — remains hidden until there is motivation to show it. Example: rats explored a maze without reward but performed better than unrewarded controls once food was added. Challenges strict behaviorism.'},
+  // ── MEMORY ──
+  {cat:'Memory',term:'Encoding',def:'The process of getting information into memory — converting sensory input into a stored representation. Deeper, more meaningful encoding produces stronger, more durable memories.'},
+  {cat:'Memory',term:'Storage',def:'Retaining encoded information over time across sensory memory, short-term memory, and long-term memory stores.'},
+  {cat:'Memory',term:'Retrieval',def:'Accessing and bringing stored information back to conscious awareness. Aided by retrieval cues that match the original encoding context.'},
+  {cat:'Memory',term:'Sensory Memory',def:'Brief storage of all sensory input — lasts only a fraction of a second (0.5–3 sec); large capacity. Allows us to perceive the world as continuous rather than fragmented snapshots.'},
+  {cat:'Memory',term:'Short-Term Memory (STM)',def:'Holds about 7 ± 2 items (Miller\'s Law) for ~20–30 seconds without rehearsal. Also called working memory. Limited capacity and duration without active maintenance.'},
+  {cat:'Memory',term:'Long-Term Memory (LTM)',def:'Relatively permanent storage with potentially unlimited capacity and duration. Contains everything we know — facts, skills, experiences, and procedures.'},
+  {cat:'Memory',term:'Chunking',def:'Grouping individual pieces of information into larger, meaningful units to expand short-term memory capacity. Example: remembering "FBI-CIA-NASA" as 3 chunks rather than 9 separate letters.'},
+  {cat:'Memory',term:'Semantic Memory',def:'Long-term memory for general facts and world knowledge — not tied to personal experience. Example: knowing that Paris is the capital of France.'},
+  {cat:'Memory',term:'Episodic Memory',def:'Long-term memory for personally experienced events and autobiographical episodes. Example: remembering your high school graduation.'},
+  {cat:'Memory',term:'Procedural Memory',def:'Long-term memory for motor skills and how-to knowledge — typically unconscious and difficult to verbalize. Example: riding a bike, typing, playing an instrument.'},
+  {cat:'Memory',term:'Elaborative Rehearsal',def:'Encoding new information by connecting it meaningfully to existing knowledge — far more effective for long-term retention than simply repeating it. Example: making a mnemonic or relating a concept to something you already know.'},
+  {cat:'Memory',term:'Maintenance Rehearsal',def:'Simple repetition of information to keep it active in short-term memory (rote rehearsal). Effective for immediate recall but poor for long-term storage.'},
+  {cat:'Memory',term:'Context-Dependent Memory',def:'Recall is better when the retrieval environment matches the original encoding environment. Example: studying and being tested in the same room improves performance.'},
+  {cat:'Memory',term:'Anterograde Amnesia',def:'Inability to form NEW memories after brain damage — old memories before the injury remain intact. Caused by hippocampal damage. Example: patient H.M. could not form any new declarative memories.'},
+  {cat:'Memory',term:'Retrograde Amnesia',def:'Inability to recall memories from BEFORE a brain injury. New memories after the injury can still be formed.'},
+  {cat:'Memory',term:'Blocking (Tip-of-the-Tongue)',def:'A memory exists but temporarily cannot be retrieved — it feels like the word or name is "on the tip of your tongue." The information is stored but retrieval fails momentarily.'},
+  {cat:'Memory',term:'Misattribution',def:'A memory is accurate but attributed to the wrong source. Example: remembering a fact correctly but believing you read it in a reputable source when you actually heard it as a rumor.'},
+  {cat:'Memory',term:'Misinformation Effect (Suggestibility)',def:'Exposure to misleading post-event information can alter or distort original memories. Example: a leading question from a lawyer ("Did you see the broken headlight?") can implant details not originally witnessed.'},
+  // ── DEVELOPMENT ──
+  {cat:'Development',term:'Three Domains of Development',def:'Physical (body, brain, motor skills), Cognitive (thinking, memory, language, problem-solving), and Social-Emotional (relationships, emotions, identity, moral reasoning).'},
+  {cat:'Development',term:'Teratogens',def:'Environmental agents that harm the developing fetus: alcohol (FAS), drugs, radiation, infections (rubella). Damage depends on timing (critical periods) and dosage — first trimester is most vulnerable.'},
+  {cat:'Development',term:'Nature vs. Nurture',def:'The debate over whether behavior is primarily determined by genes (nature) or environment/experience (nurture). Modern view: both interact — genes set a range of possibilities, environment shapes expression within that range.'},
+  {cat:'Development',term:'Cross-Sectional vs. Longitudinal Study',def:'Cross-sectional: compares different age groups at one point in time — fast but cannot track individual change. Longitudinal: follows the same people over many years — tracks real development but slow and expensive.'},
+  {cat:'Development',term:'Secure Attachment',def:'Child is distressed when caregiver leaves, joyful at reunion, uses caregiver as a safe base to explore the environment. Associated with warm, responsive caregiving. Linked to better social and emotional outcomes.'},
+  {cat:'Development',term:'Avoidant Attachment',def:'Child shows little distress at separation and actively avoids or ignores the caregiver at reunion. Associated with emotionally unavailable or rejecting caregiving.'},
+  {cat:'Development',term:'Ambivalent / Anxious Attachment',def:'Child is extremely distressed at separation; at reunion shows a mix of seeking comfort and angry resistance — not easily soothed. Associated with inconsistent caregiving.'},
+  {cat:'Development',term:'Object Permanence',def:'The understanding that objects continue to exist even when out of sight. Develops during Piaget\'s sensorimotor stage (around 8–12 months). Before this, "out of sight = out of mind."'},
+  {cat:'Development',term:'Egocentrism (Piaget)',def:'The preoperational child\'s inability to see the world from another person\'s perspective. Example: a child covers their own eyes and thinks you can\'t see them. Typical of ages 2–7.'},
+  {cat:'Development',term:'Conservation (Piaget)',def:'Understanding that the quantity of something stays the same despite changes in its appearance. Develops in the concrete operational stage (~7–11). Example: same amount of water in a tall vs. wide glass.'},
+  {cat:'Development',term:'Piaget\'s Formal Operational Stage',def:'The fourth and final stage (age 12+): ability to think abstractly, reason hypothetically ("what if?"), and use systematic logic. Enables scientific reasoning and moral philosophy.'},
+  {cat:'Development',term:'Erikson Stage 5: Identity vs. Role Confusion',def:'Adolescence (12–18): the central task is forming a stable personal identity — exploring values, beliefs, and goals. Success = strong sense of self; failure = confusion about who one is and where one belongs.'},
+  {cat:'Development',term:'Adolescent Brain Development',def:'The amygdala (emotional reactivity and impulse) develops significantly before the prefrontal cortex (rational thought, impulse control, long-term planning) — explaining why teens take more risks and act more emotionally.'},
+  // ── PERSONALITY ──
+  {cat:'Personality',term:'Id',def:'Freud\'s unconscious reservoir of primitive drives (hunger, sex, aggression) operating on the pleasure principle — demands immediate gratification with no regard for reality or morality.'},
+  {cat:'Personality',term:'Ego',def:'Freud\'s rational mediator between id and superego, operating on the reality principle — finds realistic, socially acceptable ways to satisfy the id\'s demands while managing the superego\'s constraints.'},
+  {cat:'Personality',term:'Superego',def:'Freud\'s internalized moral standards and ideals absorbed from parents and society. Produces guilt and shame when violated. Strives for perfection, not just reality.'},
+  {cat:'Personality',term:'Defense Mechanisms',def:'Unconscious strategies the ego uses to reduce anxiety by distorting reality. Examples: repression (blocking threatening thoughts), denial, projection (attributing own feelings to others), rationalization (making excuses).'},
+  {cat:'Personality',term:'Big Five (OCEAN)',def:'Five major empirically derived dimensions of personality: Openness to experience, Conscientiousness, Extraversion, Agreeableness, Neuroticism. Most supported personality model in research.'},
+  {cat:'Personality',term:'Self-Actualization',def:'Maslow\'s concept: reaching one\'s full potential and becoming the best version of oneself — the highest level of his hierarchy of needs, above physiological, safety, belonging, and esteem needs.'},
+  {cat:'Personality',term:'Unconditional Positive Regard',def:'Rogers\' concept of fully accepting and valuing a person without any conditions or judgment. Core to client-centered therapy — creates a safe environment for growth and self-exploration.'},
+  {cat:'Personality',term:'Internal Locus of Control',def:'The belief that you control your own outcomes through your own actions, decisions, and effort. Associated with better health, achievement, and mental wellbeing.'},
+  {cat:'Personality',term:'External Locus of Control',def:'The belief that outcomes are determined by outside forces: luck, fate, other people, or circumstances beyond one\'s control.'},
+  {cat:'Personality',term:'Reciprocal Determinism (Bandura)',def:'Behavior, personal cognitive factors (beliefs, expectations), and environment all mutually and continuously influence each other — none is the sole cause of personality or behavior.'},
+  {cat:'Personality',term:'Self-Report Tests (Objective)',def:'Questionnaires where individuals rate or describe their own personality traits. Examples: MMPI, Big Five inventories. Standardized and reliable but vulnerable to social desirability bias (answering to look good).'},
+  {cat:'Personality',term:'Projective Tests',def:'Present ambiguous stimuli (inkblots, ambiguous images) and ask for interpretations — the person "projects" unconscious thoughts and feelings. Examples: Rorschach inkblot test, TAT. Criticized for low reliability and validity.'},
+  // ── SOCIAL ──
+  {cat:'Social',term:'Internal vs. External Attribution',def:'Internal attribution: behavior caused by the person\'s character or traits. External attribution: behavior caused by the situation or circumstances. We tend to make internal attributions for others and external ones for ourselves.'},
+  {cat:'Social',term:'Fundamental Attribution Error',def:'The tendency to over-attribute others\' behavior to personal/dispositional factors and under-attribute to situational factors. Example: assuming a rude waiter is a rude person, not someone having a terrible day.'},
+  {cat:'Social',term:'Conformity',def:'Adjusting one\'s behavior or beliefs to match the norms of a group — even without explicit pressure. Demonstrated by Asch\'s line experiments: ~75% of participants conformed at least once, giving an obviously wrong answer to match the group.'},
+  {cat:'Social',term:'Compliance',def:'Agreeing to a direct request from another person. Does not require authority — just a request. Techniques include foot-in-the-door (small request first) and door-in-the-face (large request first).'},
+  {cat:'Social',term:'Obedience',def:'Following direct commands from an authority figure. Milgram\'s study: ~65% of ordinary people delivered the maximum (fake) electric shock of 450V when ordered by an authority figure in a lab coat.'},
+  {cat:'Social',term:'Cognitive Dissonance',def:'The psychological discomfort experienced when holding two conflicting beliefs or when behavior conflicts with beliefs → motivates attitude change to restore internal consistency. Example: a smoker who knows smoking is harmful.'},
+  {cat:'Social',term:'Bystander Effect',def:'The more people present in an emergency, the less likely any one person is to help — due to diffusion of responsibility (assuming someone else will help) and pluralistic ignorance (looking to others to define the situation).'},
+  {cat:'Social',term:'Stereotype',def:'A generalized (often oversimplified and rigid) belief about the characteristics of a group of people. Not always negative, but can lead to prejudice and discrimination.'},
+  {cat:'Social',term:'Prejudice',def:'A negative attitude, feeling, or evaluation directed toward a group and its members — often based on limited information. An attitude, not a behavior.'},
+  {cat:'Social',term:'Discrimination',def:'Unjustified negative behavior or unequal treatment directed toward a group or individual based on group membership. Discrimination is the behavioral expression of prejudice.'},
+  {cat:'Social',term:'Self-Fulfilling Prophecy',def:'A belief or expectation about someone that causes behavior in that person that confirms the original belief. Example: a teacher expects a student to fail → gives less attention and support → student fails.'},
+  // ── DISORDERS ──
+  {cat:'Disorders',term:'DSM-5',def:'Diagnostic and Statistical Manual of Mental Disorders, 5th edition — the standard classification system used by mental health professionals in the US to diagnose psychological disorders.'},
+  {cat:'Disorders',term:'Diathesis-Stress Model',def:'Psychological disorders result from a combination of a biological predisposition (diathesis — genetic or neurological vulnerability) and environmental stressors. Neither alone is typically sufficient.'},
+  {cat:'Disorders',term:'Biopsychosocial Approach',def:'Considers biological (genetics, brain chemistry, hormones), psychological (thoughts, emotions, behaviors, coping), and social (culture, relationships, stressors, SES) factors together to understand and treat disorders.'},
+  {cat:'Disorders',term:'Generalized Anxiety Disorder (GAD)',def:'Excessive, difficult-to-control worry about multiple areas of life (work, health, relationships) for 6+ months. Accompanied by restlessness, fatigue, difficulty concentrating, irritability, muscle tension, and sleep problems.'},
+  {cat:'Disorders',term:'Panic Disorder',def:'Recurrent, unexpected panic attacks (sudden intense fear: chest pain, shortness of breath, heart pounding, sense of doom) plus persistent worry about future attacks or avoidance of situations that might trigger them.'},
+  {cat:'Disorders',term:'Specific Phobia',def:'Intense, persistent, irrational fear of a specific object or situation (animals, heights, blood, flying) that is markedly disproportionate to actual danger and leads to avoidance.'},
+  {cat:'Disorders',term:'OCD — Obsessions',def:'Unwanted, intrusive, recurring, and distressing thoughts or images that the person recognizes as irrational. Examples: fear of contamination, fears of harming others, need for symmetry.'},
+  {cat:'Disorders',term:'OCD — Compulsions',def:'Repetitive behaviors or mental acts performed to neutralize the distress caused by obsessions. Examples: excessive hand-washing, checking, counting, arranging. Provide temporary relief but reinforce the cycle.'},
+  {cat:'Disorders',term:'Major Depressive Disorder (MDD)',def:'5 or more symptoms for 2+ weeks including depressed mood and/or loss of interest/pleasure: weight/appetite changes, sleep disturbance, fatigue, worthlessness, difficulty concentrating, and thoughts of death or suicide.'},
+  {cat:'Disorders',term:'Learned Helplessness (Seligman)',def:'After repeated exposure to uncontrollable negative events, a person stops trying to change their situation — even when change becomes possible. Key cognitive model of depression. Demonstrated in dogs exposed to inescapable shocks.'},
+  {cat:'Disorders',term:'Bipolar Disorder',def:'Alternating episodes of mania (elevated/expansive mood, grandiosity, decreased need for sleep, racing thoughts, impulsivity, risky behavior) and major depression. Distinct from ordinary mood swings in severity and duration.'},
+  {cat:'Disorders',term:'Schizophrenia — Positive Symptoms',def:'Symptoms that represent an ADDITION of abnormal experiences: hallucinations (false sensory perceptions — most commonly hearing voices) and delusions (fixed, false beliefs — e.g., being persecuted, having special powers).'},
+  {cat:'Disorders',term:'Schizophrenia — Negative Symptoms',def:'Symptoms that represent a REDUCTION in normal functioning: flat/blunted affect (reduced emotional expression), alogia (poverty of speech), avolition (lack of motivation), anhedonia (inability to feel pleasure), social withdrawal.'},
+  {cat:'Disorders',term:'Borderline Personality Disorder (BPD)',def:'Pervasive instability in relationships, self-image, and emotions; intense fear of abandonment; chronic feelings of emptiness; impulsivity; self-harm; and extreme mood episodes lasting hours to days.'},
+  {cat:'Disorders',term:'Antisocial Personality Disorder (ASPD)',def:'Persistent pattern of disregard for and violation of others\' rights: deceitfulness, impulsivity, aggressiveness, reckless disregard for safety, irresponsibility, and lack of remorse. Previously called sociopathy or psychopathy.'},
+  {cat:'Disorders',term:'Autism Spectrum Disorder (ASD)',def:'Characterized by persistent deficits in social communication/interaction and restricted, repetitive patterns of behavior or interests. Ranges widely in severity. Symptoms present in early developmental period.'},
+  {cat:'Disorders',term:'ADHD',def:'Persistent pattern of inattention and/or hyperactivity-impulsivity that interferes with functioning or development. Must be present in two or more settings, with onset before age 12.'},
+  // ── THERAPY ──
+  {cat:'Therapy',term:'Biological Therapy',def:'Treats psychological disorders with physical/medical interventions: psychiatric medications (antidepressants, antipsychotics, anxiolytics), electroconvulsive therapy (ECT) for severe depression, and transcranial magnetic stimulation (TMS).'},
+  {cat:'Therapy',term:'Psychodynamic Therapy',def:'Explores unconscious conflicts, defense mechanisms, and early experiences through free association and dream analysis. Goal: bring unconscious material into awareness → insight → symptom relief.'},
+  {cat:'Therapy',term:'Free Association',def:'A psychodynamic technique where the client says whatever comes to mind without censoring — therapist listens for patterns, recurring themes, and slips that reveal unconscious conflicts and desires.'},
+  {cat:'Therapy',term:'Dream Analysis',def:'Freudian technique treating dreams as the "royal road to the unconscious." Manifest content = what literally happens in the dream. Latent content = the hidden unconscious meaning beneath the surface symbols.'},
+  {cat:'Therapy',term:'Client-Centered Therapy (Rogers)',def:'Humanistic therapy providing three core conditions: unconditional positive regard (full acceptance), empathy (accurate understanding), and genuineness (therapist authenticity). Goal: facilitate the client\'s own self-actualization.'},
+  {cat:'Therapy',term:'Systematic Desensitization',def:'Behavioral therapy for phobias developed by Wolpe: (1) learn deep relaxation, (2) create a fear hierarchy from least to most feared, (3) gradually pair relaxation with each level of the hierarchy until the fear response is eliminated.'},
+  {cat:'Therapy',term:'Exposure & Response Prevention (ERP)',def:'Evidence-based OCD treatment: the client deliberately confronts the feared obsessional trigger and then resists performing the compulsive response — allowing anxiety to peak and naturally subside, breaking the cycle.'},
+  {cat:'Therapy',term:'Token Economy',def:'Applied behavior analysis technique where desired behaviors earn tokens redeemable for privileges or rewards. Used in psychiatric hospitals, schools, and addiction treatment programs to systematically shape behavior.'},
+  {cat:'Therapy',term:'Cognitive Behavioral Therapy (CBT)',def:'Identifies and challenges cognitive distortions (all-or-nothing thinking, catastrophizing, overgeneralizing) and changes maladaptive behaviors. Structured, goal-directed, time-limited. Most empirically supported psychotherapy for anxiety, depression, OCD, and PTSD.'},
+  {cat:'Therapy',term:'Group Therapy',def:'Multiple clients (typically 6–12) treated together by one or more therapists. Benefits: social support, normalization ("I\'m not alone"), vicarious learning, cost-effectiveness, and opportunity to practice interpersonal skills in a safe setting.'},
+  {cat:'Therapy',term:'Manifest vs. Latent Content (Dreams)',def:'Manifest content: the literal story and events of a dream as remembered. Latent content: the hidden psychological meaning — the unconscious wishes, fears, and conflicts symbolized by the manifest content (Freud).'},
+];
+
+let deck=[...ALL_CARDS],idx=0,ratings={},isFlipped=false;
+
+function shuffleCards(){
+  for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
+  idx=0;ratings={};updateStats();showCard();
+  document.getElementById('fcDone').style.display='none';
+  document.getElementById('fcDeck').style.display='block';
 }
+function filterCards(cat,btn){
+  document.querySelectorAll('.fc-filter-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  deck=cat==='all'?[...ALL_CARDS]:ALL_CARDS.filter(c=>c.cat===cat);
+  idx=0;ratings={};updateStats();showCard();
+  document.getElementById('fcDone').style.display='none';
+  document.getElementById('fcDeck').style.display='block';
+}
+function showCard(){
+  if(!deck.length)return;
+  const c=deck[idx];
+  document.getElementById('fcTerm').textContent=c.term;
+  document.getElementById('fcDef').textContent=c.def;
+  document.getElementById('fcCat').textContent='📂 '+c.cat;
+  isFlipped=false;
+  document.getElementById('fcScene').classList.remove('flipped');
+  document.getElementById('fcPrev').disabled=idx===0;
+  document.getElementById('fcNext').disabled=idx===deck.length-1;
+  const pct=deck.length>1?(idx/(deck.length-1))*100:100;
+  document.getElementById('fcProgress').style.width=pct+'%';
+  document.getElementById('fcCounter').innerHTML='Card <span>'+(idx+1)+'</span> / <span>'+deck.length+'</span>';
+}
+function flipCard(){isFlipped=!isFlipped;document.getElementById('fcScene').classList.toggle('flipped',isFlipped);}
+function nextCard(){if(idx<deck.length-1){idx++;showCard();}}
+function prevCard(){if(idx>0){idx--;showCard();}}
+function rateCard(rating){
+  ratings[deck[idx].term]=rating;updateStats();
+  if(idx<deck.length-1){idx++;showCard();}else{showDone();}
+}
+function updateStats(){
+  const v=Object.values(ratings);
+  document.getElementById('statHard').textContent=v.filter(x=>x==='hard').length;
+  document.getElementById('statGood').textContent=v.filter(x=>x==='good').length;
+  document.getElementById('statEasy').textContent=v.filter(x=>x==='easy').length;
+}
+function showDone(){
+  const v=Object.values(ratings);
+  document.getElementById('fcDeck').style.display='none';
+  document.getElementById('fcDone').style.display='block';
+  document.getElementById('fcDoneSummary').textContent=
+    '✅ '+v.filter(x=>x==='easy').length+' mastered · 🙂 '+v.filter(x=>x==='good').length+' almost · 😓 '+v.filter(x=>x==='hard').length+' still learning';
+}
+function restartDeck(){
+  idx=0;ratings={};updateStats();showCard();
+  document.getElementById('fcDone').style.display='none';
+  document.getElementById('fcDeck').style.display='block';
+}
+showCard();
 </script>
 </body>
 </html>
