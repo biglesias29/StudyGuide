@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psychology Final Exam – Rapid Study Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #161923;
+    --card: #1c2130;
+    --border: #2a3248;
+    --accent: #f5a623;
+    --accent2: #4fc3f7;
+    --accent3: #a78bfa;
+    --accent4: #34d399;
+    --accent5: #f87171;
+    --text: #e8eaf0;
+    --muted: #8892a4;
+    --tag-bg: #252d3f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  header {
+    background: linear-gradient(135deg, #0d0f14 0%, #1a1040 50%, #0d1520 100%);
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(167,139,250,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(245,166,35,0.08) 0%, transparent 50%);
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--accent);
+    position: relative;
+    letter-spacing: -1px;
+  }
+  header p {
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    position: relative;
+  }
+  .timer-badge {
+    display: inline-block;
+    background: rgba(248,113,113,0.15);
+    border: 1px solid #f87171;
+    color: #f87171;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    padding: 0.3rem 1rem;
+    border-radius: 999px;
+    margin-top: 1rem;
+    position: relative;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+  nav {
+    background: var(--surface);
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--accent); border-color: var(--accent); background: rgba(245,166,35,0.05); }
+
+  main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  .section {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    min-width: 2rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .section-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #3a4560; }
+
+  .card-q {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    user-select: none;
+  }
+  .card-q:hover { background: rgba(255,255,255,0.02); }
+  .q-text {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+  }
+  .toggle-icon {
+    font-size: 1rem;
+    color: var(--muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .card.open .toggle-icon { transform: rotate(90deg); }
+
+  .card-a {
+    display: none;
+    padding: 0 1.25rem 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .card.open .card-a { display: block; }
+  .card-a p { font-size: 0.88rem; color: #c5cad8; margin-top: 0.75rem; line-height: 1.8; }
+  .card-a ul { margin: 0.6rem 0 0 1rem; }
+  .card-a ul li { font-size: 0.88rem; color: #c5cad8; margin-bottom: 0.3rem; }
+
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    margin-right: 0.3rem;
+    margin-bottom: 0.3rem;
+    vertical-align: middle;
+  }
+  .tag.key { background: rgba(245,166,35,0.12); color: var(--accent); }
+  .tag.def { background: rgba(79,195,247,0.1); color: var(--accent2); }
+  .tag.ex { background: rgba(52,211,153,0.1); color: var(--accent4); }
+
+  .highlight-box {
+    background: rgba(167,139,250,0.07);
+    border-left: 3px solid var(--accent3);
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-size: 0.87rem;
+    color: #c5cad8;
+  }
+  .warn-box {
+    background: rgba(245,166,35,0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-size: 0.87rem;
+    color: #c5cad8;
+  }
+  .warn-box strong, .highlight-box strong { color: var(--text); }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+    margin: 0.75rem 0;
+  }
+  .compare-table th {
+    background: var(--tag-bg);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--accent2);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+  }
+  .compare-table td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    color: #c5cad8;
+    vertical-align: top;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .expand-all-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+  }
+  .expand-all-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  strong { color: var(--text); font-weight: 600; }
+
+  .color-1 { color: #f5a623; }
+  .color-2 { color: #4fc3f7; }
+  .color-3 { color: #a78bfa; }
+  .color-4 { color: #34d399; }
+  .color-5 { color: #f87171; }
+
+  .dot-1 { background: #f5a623; }
+  .dot-2 { background: #4fc3f7; }
+  .dot-3 { background: #a78bfa; }
+  .dot-4 { background: #34d399; }
+  .dot-5 { background: #f87171; }
+  .dot-6 { background: #fb923c; }
+  .dot-7 { background: #c084fc; }
+  .dot-8 { background: #60a5fa; }
+  .dot-9 { background: #2dd4bf; }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Psychology Final Exam</h1>
+  <p>Rapid Study Guide — All Topics Covered</p>
+  <div class="timer-badge">⚡ Exam today at 5:00 PM — Study smart!</div>
+</header>
+
+<nav>
+  <a href="#intro">Intro & Methods</a>
+  <a href="#neuro">Neuroscience</a>
+  <a href="#sensation">Sensation</a>
+  <a href="#learning">Learning</a>
+  <a href="#memory">Memory</a>
+  <a href="#development">Development</a>
+  <a href="#personality">Personality</a>
+  <a href="#social">Social Psych</a>
+  <a href="#disorders">Disorders</a>
+  <a href="#therapy">Therapy</a>
+</nav>
+
+<main>
+
+<!-- ====== SECTION 1 ====== -->
+<div class="section" id="intro">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <span class="section-dot dot-1"></span>
+    <h2 class="section-title color-1">Introduction & Research Methods</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">What is psychology? What is critical thinking?</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p><strong>Psychology</strong> is the scientific study of behavior and mental processes.</p>
+      <p><strong>Critical thinking</strong> means evaluating claims using evidence, logic, and skepticism rather than assumptions. It involves: asking questions, examining evidence, analyzing assumptions, considering alternatives, and drawing careful conclusions.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Contemporary schools of thought in psychology</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <table class="compare-table">
+        <tr><th>School</th><th>Core Idea</th></tr>
+        <tr><td><strong>Psychoanalytic/Psychodynamic</strong></td><td>Unconscious conflicts (Freud); early childhood shapes personality</td></tr>
+        <tr><td><strong>Behaviorism</strong></td><td>Only observable behavior matters; shaped by environment/conditioning (Watson, Skinner)</td></tr>
+        <tr><td><strong>Gestalt</strong></td><td>"The whole is greater than the sum of its parts" — perception is organized holistically</td></tr>
+        <tr><td><strong>Humanistic</strong></td><td>Focus on free will, growth, self-actualization (Maslow, Rogers)</td></tr>
+        <tr><td><strong>Cognitive</strong></td><td>Mental processes (thinking, memory, problem-solving) shape behavior</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Elements of a true experiment: IV, DV, groups, random assignment</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Independent Variable (IV):</strong> What the researcher manipulates (the cause)</li>
+        <li><strong>Dependent Variable (DV):</strong> What is measured (the effect/outcome)</li>
+        <li><strong>Experimental group:</strong> Receives the treatment/manipulation</li>
+        <li><strong>Control group:</strong> Does NOT receive the treatment (baseline for comparison)</li>
+        <li><strong>Random assignment:</strong> Participants randomly placed into groups — this controls for pre-existing differences and allows cause-and-effect conclusions</li>
+      </ul>
+      <div class="warn-box">⚠️ <strong>Key:</strong> Only true experiments (with random assignment) can establish cause and effect.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Hypothesis vs. Operational Definition</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p><strong>Hypothesis:</strong> A testable prediction about the relationship between variables. <em>Example: "Students who sleep 8 hours will score higher on exams."</em></p>
+      <p><strong>Operational definition:</strong> How a variable is specifically measured or defined in the study. <em>Example: "Sleep" = hours logged via wristband tracker; "score" = percent correct on a 50-item test.</em></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Correlations: directionality & third variable problems</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p>A <strong>correlation</strong> shows a relationship between two variables — it does NOT prove causation.</p>
+      <ul>
+        <li><strong>Directionality problem:</strong> We don't know which variable causes the other. (Does depression cause inactivity, or does inactivity cause depression?)</li>
+        <li><strong>Third variable problem:</strong> A hidden third variable may cause both. (Ice cream sales and drowning rates correlate — both caused by hot weather.)</li>
+      </ul>
+      <p><strong>Experiment vs. Correlation:</strong> An experiment manipulates a variable and uses random assignment → can establish cause. A correlational study just measures variables as they exist → cannot establish cause.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Surveys, observational studies, case studies; sample vs. population</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Survey:</strong> Self-report questionnaire given to many people</li>
+        <li><strong>Observational study:</strong> Researcher watches and records behavior without intervening</li>
+        <li><strong>Case study:</strong> In-depth study of one individual or group</li>
+      </ul>
+      <p><strong>Population:</strong> The entire group of interest. <strong>Sample:</strong> The subset of the population actually studied. Good samples are representative of the population.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 2 ====== -->
+<div class="section" id="neuro">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <span class="section-dot dot-2"></span>
+    <h2 class="section-title color-2">Neuroscience & Biological Foundations</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Parts of a neuron and their functions</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <table class="compare-table">
+        <tr><th>Part</th><th>Function</th></tr>
+        <tr><td><strong>Dendrites</strong></td><td>Receive incoming signals from other neurons</td></tr>
+        <tr><td><strong>Cell body (soma)</strong></td><td>Processes signals; contains nucleus</td></tr>
+        <tr><td><strong>Axon</strong></td><td>Carries electrical signal away from cell body</td></tr>
+        <tr><td><strong>Myelin sheath</strong></td><td>Fatty coating that insulates axon; speeds signal transmission</td></tr>
+        <tr><td><strong>Terminal buds</strong></td><td>Release neurotransmitters into synapse</td></tr>
+        <tr><td><strong>Synapse</strong></td><td>The gap between neurons where communication occurs</td></tr>
+      </table>
+      <p><strong>Action potential:</strong> The electrical charge that travels down the axon when a neuron fires. It's all-or-nothing.</p>
+      <p><strong>Neurotransmitters:</strong> Chemical messengers released from terminal buds that cross the synapse and bind to the next neuron's receptors.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">The nervous system — all parts and functions</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <div class="highlight-box">
+        <strong>Central Nervous System (CNS):</strong> Brain + Spinal cord<br>
+        <strong>Peripheral Nervous System (PNS):</strong> All nerves outside brain/spinal cord
+      </div>
+      <p>The PNS splits into:</p>
+      <ul>
+        <li><strong>Somatic NS:</strong> Controls voluntary muscle movements; carries sensory info to CNS</li>
+        <li><strong>Autonomic NS:</strong> Controls involuntary functions (heart rate, digestion, glands)</li>
+      </ul>
+      <p>The Autonomic NS splits into:</p>
+      <ul>
+        <li><strong>Sympathetic:</strong> "Fight or flight" — accelerates heart rate, dilates pupils, slows digestion</li>
+        <li><strong>Parasympathetic:</strong> "Rest and digest" — slows heart, constricts pupils, promotes digestion</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Brain lobes and cortex regions</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <table class="compare-table">
+        <tr><th>Structure</th><th>Function</th></tr>
+        <tr><td><strong>Frontal lobe / Motor cortex</strong></td><td>Planning, decision-making, personality; voluntary movement</td></tr>
+        <tr><td><strong>Parietal lobe / Somatosensory cortex</strong></td><td>Processes touch, pain, temperature, body position</td></tr>
+        <tr><td><strong>Occipital lobe / Primary visual cortex</strong></td><td>Processes visual information</td></tr>
+        <tr><td><strong>Temporal lobe / Primary auditory cortex</strong></td><td>Language, hearing, memory (contains hippocampus)</td></tr>
+        <tr><td><strong>Corpus callosum</strong></td><td>Bundle of fibers connecting left and right hemispheres</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Thalamus, hypothalamus, amygdala, hippocampus</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Thalamus:</strong> Relay station — routes sensory info to correct brain regions</li>
+        <li><strong>Hypothalamus:</strong> Regulates drives (hunger, thirst, sex, temperature); controls pituitary gland</li>
+        <li><strong>Amygdala:</strong> Emotional processing, especially fear and aggression</li>
+        <li><strong>Hippocampus:</strong> Forming new long-term memories; spatial navigation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Pons, medulla, substantia nigra, cerebellum & neuroplasticity</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Medulla:</strong> Controls vital functions — breathing, heart rate, blood pressure</li>
+        <li><strong>Pons:</strong> Involved in sleep, arousal, relaying signals; connects cerebrum to cerebellum</li>
+        <li><strong>Substantia nigra:</strong> Produces dopamine; involved in movement (damaged in Parkinson's)</li>
+        <li><strong>Cerebellum:</strong> Coordination, balance, fine motor movements</li>
+      </ul>
+      <p><strong>Neuroplasticity:</strong> The brain's ability to reorganize and form new neural connections throughout life — especially in response to learning or injury.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Endocrine system: glands and hormones</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p>The <strong>endocrine system</strong> communicates via <strong>hormones</strong> (chemical messengers) secreted by <strong>glands</strong> directly into the bloodstream — slower but longer-lasting than neural signals.</p>
+      <p>Key glands: pituitary (master gland), adrenal (stress hormones like cortisol/adrenaline), thyroid, pancreas, gonads (sex hormones).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 3 ====== -->
+<div class="section" id="sensation">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <span class="section-dot dot-3"></span>
+    <h2 class="section-title color-3">Sensation & Perception</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Sensation vs. Perception; Transduction</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p><strong>Sensation:</strong> Detection of physical stimuli by sensory organs (raw data input).</p>
+      <p><strong>Perception:</strong> The brain's interpretation and organization of those signals (making meaning).</p>
+      <p><strong>Transduction:</strong> Converting physical stimulus energy (light, sound waves, etc.) into electrical signals the brain can process.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Bottom-up vs. Top-down processing</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Bottom-up processing:</strong> Starts with raw sensory data, builds up to perception. Data-driven. <em>Example: reading letter by letter.</em></li>
+        <li><strong>Top-down processing:</strong> Uses prior knowledge, context, and expectations to interpret sensory input. <em>Example: reading a misspelled word correctly because you know what it "should" say.</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Absolute threshold, difference threshold (JND), sensory adaptation</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Absolute threshold:</strong> The minimum stimulus intensity detectable 50% of the time</li>
+        <li><strong>Difference threshold (JND – Just Noticeable Difference):</strong> The minimum change in stimulus needed to notice a difference 50% of the time</li>
+        <li><strong>Sensory adaptation:</strong> Diminished sensitivity to a constant stimulus over time (e.g., you stop noticing background noise)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Kinesthetic sense, vestibular sense; monocular vs. binocular depth cues</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Kinesthetic sense:</strong> Awareness of body position and movement of limbs</li>
+        <li><strong>Vestibular sense:</strong> Sense of balance and spatial orientation (inner ear)</li>
+      </ul>
+      <p><strong>Depth cues:</strong></p>
+      <ul>
+        <li><strong>Monocular cues:</strong> Work with one eye — linear perspective, relative size, overlap, texture gradient, motion parallax</li>
+        <li><strong>Binocular cues:</strong> Require both eyes — retinal disparity (slightly different images from each eye) and convergence (eyes turning inward for close objects)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 4 ====== -->
+<div class="section" id="learning">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <span class="section-dot dot-4"></span>
+    <h2 class="section-title color-4">Learning</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Classical conditioning — all key terms with examples</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <div class="highlight-box">Classical conditioning = learning through association. An originally neutral stimulus comes to produce a response after being paired with a stimulus that naturally causes that response.</div>
+      <table class="compare-table">
+        <tr><th>Term</th><th>Definition</th><th>Pavlov Example</th></tr>
+        <tr><td><strong>Unconditioned Stimulus (US)</strong></td><td>Naturally triggers response</td><td>Food</td></tr>
+        <tr><td><strong>Unconditioned Response (UR)</strong></td><td>Natural, unlearned response to US</td><td>Salivation</td></tr>
+        <tr><td><strong>Neutral Stimulus (NS)</strong></td><td>Initially produces no response</td><td>Bell (before conditioning)</td></tr>
+        <tr><td><strong>Conditioned Stimulus (CS)</strong></td><td>Previously neutral; now triggers response after learning</td><td>Bell (after conditioning)</td></tr>
+        <tr><td><strong>Conditioned Response (CR)</strong></td><td>Learned response to CS</td><td>Salivation to bell</td></tr>
+      </table>
+      <ul>
+        <li><strong>Stimulus generalization:</strong> Responding to stimuli similar to the CS (dog conditioned to bell also responds to a buzzer)</li>
+        <li><strong>Stimulus discrimination:</strong> Responding only to the specific CS, not similar stimuli</li>
+        <li><strong>Extinction:</strong> CR disappears when CS is repeatedly presented without US</li>
+        <li><strong>Spontaneous recovery:</strong> Extinguished CR reappears after a rest period</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Operant conditioning — reinforcement, punishment, shaping</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <div class="highlight-box">Operant conditioning = learning from consequences of behavior (Skinner). Behavior increases when reinforced, decreases when punished.</div>
+      <table class="compare-table">
+        <tr><th>Type</th><th>What happens</th><th>Effect on behavior</th><th>Example</th></tr>
+        <tr><td><strong>Positive reinforcement</strong></td><td>Add something pleasant</td><td>Increase</td><td>Give candy for good grades</td></tr>
+        <tr><td><strong>Negative reinforcement</strong></td><td>Remove something unpleasant</td><td>Increase</td><td>Fasten seatbelt to stop beeping</td></tr>
+        <tr><td><strong>Positive punishment</strong></td><td>Add something unpleasant</td><td>Decrease</td><td>Extra homework for misbehaving</td></tr>
+        <tr><td><strong>Negative punishment</strong></td><td>Remove something pleasant</td><td>Decrease</td><td>Take away phone for bad behavior</td></tr>
+      </table>
+      <p><strong>Primary reinforcers:</strong> Innately satisfying (food, water, warmth). <strong>Secondary reinforcers:</strong> Learned value (money, grades, praise).</p>
+      <p><strong>Shaping:</strong> Reinforcing successive approximations toward a target behavior. <em>Example: rewarding a rat for moving toward a lever, then touching it, then pressing it.</em></p>
+      <p><strong>Observational learning:</strong> Learning by watching others (Bandura's Bobo doll study). No direct reinforcement required.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 5 ====== -->
+<div class="section" id="memory">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <span class="section-dot dot-5"></span>
+    <h2 class="section-title color-5">Memory</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Three types of memory — capacity and duration</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <table class="compare-table">
+        <tr><th>Type</th><th>Duration</th><th>Capacity</th></tr>
+        <tr><td><strong>Sensory memory</strong></td><td>Fraction of a second (~0.5–3 sec)</td><td>Large (all sensory input briefly)</td></tr>
+        <tr><td><strong>Short-term memory (STM)</strong></td><td>~20–30 seconds without rehearsal</td><td>7 ± 2 items (Miller's Law)</td></tr>
+        <tr><td><strong>Long-term memory (LTM)</strong></td><td>Potentially unlimited / lifetime</td><td>Potentially unlimited</td></tr>
+      </table>
+      <p><strong>Chunking:</strong> Grouping items into meaningful units to expand STM capacity. <em>Example: remembering "FBI-CIA-NASA" as 3 chunks instead of 9 letters.</em></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Types of long-term memory; rehearsal types</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Semantic memory:</strong> General facts and knowledge ("Paris is the capital of France")</li>
+        <li><strong>Episodic memory:</strong> Personal experiences and events ("My first day of college")</li>
+        <li><strong>Procedural memory:</strong> Skills and how to do things ("How to ride a bike")</li>
+      </ul>
+      <ul>
+        <li><strong>Maintenance rehearsal:</strong> Simple repetition to keep info in STM (reciting a phone number). Less effective for LTM.</li>
+        <li><strong>Elaborative rehearsal:</strong> Connecting new info to existing knowledge. Far more effective for long-term retention.</li>
+      </ul>
+      <p><strong>Context-dependent memory:</strong> Recall is better when the retrieval environment matches the encoding environment (studying and testing in the same room).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Amnesia types; reasons we forget</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Anterograde amnesia:</strong> Cannot form NEW memories after brain injury (can still recall old memories)</li>
+        <li><strong>Retrograde amnesia:</strong> Cannot recall memories BEFORE brain injury</li>
+      </ul>
+      <p><strong>Why we forget:</strong></p>
+      <ul>
+        <li><strong>Blocking:</strong> Memory exists but can't be retrieved (tip-of-the-tongue phenomenon)</li>
+        <li><strong>Misattribution:</strong> Remembering something correctly but attributing it to the wrong source</li>
+        <li><strong>Suggestibility:</strong> Memories altered by misleading info from others (misinformation effect)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 6 ====== -->
+<div class="section" id="development">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <span class="section-dot dot-6"></span>
+    <h2 class="section-title" style="color:#fb923c;">Lifespan Development</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Three domains of development; teratogens; attachment styles</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p><strong>Three domains:</strong> Physical (body, brain, motor skills) | Cognitive (thinking, memory, language) | Social-Emotional (relationships, emotions, personality)</p>
+      <p><strong>Teratogens:</strong> Environmental agents that harm prenatal development (alcohol, drugs, radiation, certain infections). Damage depends on timing and dosage.</p>
+      <div class="highlight-box">
+        <strong>Attachment styles (Ainsworth's Strange Situation):</strong><br>
+        • <strong>Secure:</strong> Distressed when caregiver leaves, happy reunion, uses caregiver as safe base<br>
+        • <strong>Ambivalent (anxious):</strong> Very distressed at separation, ambivalent/angry at reunion — not easily soothed<br>
+        • <strong>Avoidant:</strong> Little distress at separation, ignores/avoids caregiver at reunion
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Piaget's 4 stages of cognitive development</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <table class="compare-table">
+        <tr><th>Stage</th><th>Age</th><th>Key Feature</th></tr>
+        <tr><td><strong>Sensorimotor</strong></td><td>0–2 yrs</td><td>Learning through senses & actions; develops <strong>object permanence</strong> (objects exist when out of sight)</td></tr>
+        <tr><td><strong>Preoperational</strong></td><td>2–7 yrs</td><td>Language emerges; <strong>egocentric</strong> (can't see other's perspectives); lacks conservation</td></tr>
+        <tr><td><strong>Concrete Operational</strong></td><td>7–11 yrs</td><td>Understands <strong>conservation</strong> (amount unchanged despite appearance); logical thinking about concrete events</td></tr>
+        <tr><td><strong>Formal Operational</strong></td><td>12+ yrs</td><td><strong>Abstract thinking</strong>; hypothetical reasoning</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Erikson's 8 psychosocial stages</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <table class="compare-table">
+        <tr><th>Stage</th><th>Age</th><th>Crisis</th></tr>
+        <tr><td>1</td><td>Infancy (0–1)</td><td>Trust vs. Mistrust</td></tr>
+        <tr><td>2</td><td>Toddler (1–3)</td><td>Autonomy vs. Shame/Doubt</td></tr>
+        <tr><td>3</td><td>Preschool (3–6)</td><td>Initiative vs. Guilt</td></tr>
+        <tr><td>4</td><td>School age (6–12)</td><td>Industry vs. Inferiority</td></tr>
+        <tr><td>5</td><td>Adolescence (12–18)</td><td>Identity vs. Role Confusion</td></tr>
+        <tr><td>6</td><td>Young adult (18–40)</td><td>Intimacy vs. Isolation</td></tr>
+        <tr><td>7</td><td>Middle adult (40–65)</td><td>Generativity vs. Stagnation</td></tr>
+        <tr><td>8</td><td>Late adult (65+)</td><td>Integrity vs. Despair</td></tr>
+      </table>
+      <p><strong>Adolescent brain:</strong> Amygdala (emotional reactivity) develops before the prefrontal cortex (reasoning/impulse control) → explains risk-taking and emotional behavior in teens.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 7 ====== -->
+<div class="section" id="personality">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <span class="section-dot dot-7"></span>
+    <h2 class="section-title" style="color:#c084fc;">Personality</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Freud's psychodynamic theory — 3 structures & defense mechanisms</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Id:</strong> Unconscious, primitive drives (pleasure principle) — wants immediate gratification</li>
+        <li><strong>Ego:</strong> Mediator; operates on reality principle — finds realistic ways to satisfy the id</li>
+        <li><strong>Superego:</strong> Internalized moral standards; guilt when rules are broken</li>
+      </ul>
+      <p><strong>Defense mechanisms:</strong> Unconscious strategies the ego uses to reduce anxiety (repression, denial, projection, rationalization).</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Big Five (OCEAN); locus of control; self-actualization; key terms</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <div class="highlight-box">
+        <strong>Big Five (OCEAN):</strong><br>
+        <strong>O</strong>penness | <strong>C</strong>onscientiousness | <strong>E</strong>xtraversion | <strong>A</strong>greeableness | <strong>N</strong>euroticism
+      </div>
+      <ul>
+        <li><strong>Self-actualization:</strong> Realizing one's full potential (Maslow/Rogers — top of hierarchy of needs)</li>
+        <li><strong>Internal locus of control:</strong> Belief that you control your own outcomes</li>
+        <li><strong>External locus of control:</strong> Belief that outside forces (luck, others) control outcomes</li>
+        <li><strong>Unconditional positive regard:</strong> Accepting someone fully without conditions (Rogers)</li>
+        <li><strong>Self-schema:</strong> Mental framework/beliefs about oneself</li>
+        <li><strong>Reciprocal determinism (Bandura):</strong> Behavior, personal factors, and environment all mutually influence each other</li>
+      </ul>
+      <p><strong>Tests:</strong> Self-report tests (e.g., MMPI) — questionnaires. Projective tests (e.g., Rorschach inkblot, TAT) — ambiguous stimuli reveal unconscious thoughts.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 8 ====== -->
+<div class="section" id="social">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <span class="section-dot dot-8"></span>
+    <h2 class="section-title" style="color:#60a5fa;">Social Psychology</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Attribution errors; conformity, compliance, obedience</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Personal (internal) attribution:</strong> Behavior caused by the person's character/traits</li>
+        <li><strong>Situational (external) attribution:</strong> Behavior caused by the situation</li>
+        <li><strong>Fundamental attribution error:</strong> We OVER-attribute others' behavior to personal factors and UNDER-attribute to situational factors</li>
+      </ul>
+      <ul>
+        <li><strong>Conformity:</strong> Adjusting behavior to match group norms (Asch line studies)</li>
+        <li><strong>Compliance:</strong> Agreeing to a direct request from someone (not necessarily authority)</li>
+        <li><strong>Obedience:</strong> Following orders from an authority figure</li>
+      </ul>
+      <div class="warn-box"><strong>Milgram's obedience study:</strong> Participants administered (fake) electric shocks to strangers when ordered by an authority figure in a lab coat. ~65% went to maximum voltage — showed power of authority over behavior.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Cognitive dissonance; bystander effect; stereotypes, prejudice, discrimination</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Cognitive dissonance:</strong> Discomfort from holding conflicting beliefs or behaving inconsistently with beliefs → motivates attitude change</li>
+        <li><strong>Bystander intervention effect:</strong> People are less likely to help in an emergency when others are present (diffusion of responsibility)</li>
+        <li><strong>Stereotype:</strong> Generalized belief about a group</li>
+        <li><strong>Prejudice:</strong> Negative attitude/feeling toward a group</li>
+        <li><strong>Discrimination:</strong> Negative behavior/action toward a group</li>
+        <li><strong>Self-fulfilling prophecy:</strong> A belief that causes itself to become true through behavior (teacher expects student to fail → student fails)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 9 ====== -->
+<div class="section" id="disorders">
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <span class="section-dot dot-9"></span>
+    <h2 class="section-title" style="color:#2dd4bf;">Psychological Disorders</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">DSM-5; diathesis-stress model; biopsychosocial approach</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p><strong>DSM-5:</strong> Diagnostic and Statistical Manual of Mental Disorders, 5th ed. — the standard classification system for psychological disorders used by clinicians.</p>
+      <p><strong>Diathesis-stress model:</strong> Disorders arise from a combination of biological predisposition (diathesis) + environmental stressors. Neither alone is sufficient.</p>
+      <p><strong>Biopsychosocial approach:</strong> Considers biological (genetics, brain), psychological (thoughts, emotions), and social (culture, relationships) factors together.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Anxiety disorders: GAD, panic disorder, specific phobias</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>Generalized Anxiety Disorder (GAD):</strong> Persistent, excessive worry about multiple life areas for 6+ months; restlessness, fatigue, difficulty concentrating</li>
+        <li><strong>Panic Disorder:</strong> Recurrent unexpected panic attacks (intense fear, chest pain, shortness of breath, feeling of doom) + worry about future attacks</li>
+        <li><strong>Specific Phobia:</strong> Intense, irrational fear of a specific object/situation that is disproportionate to actual danger</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">OCD; Major Depressive Disorder; learned helplessness</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <ul>
+        <li><strong>OCD — Obsessions:</strong> Unwanted, intrusive, recurring thoughts (e.g., fear of contamination)</li>
+        <li><strong>OCD — Compulsions:</strong> Repetitive behaviors performed to reduce obsession anxiety (e.g., excessive hand-washing)</li>
+      </ul>
+      <p><strong>Major Depressive Episode symptoms:</strong> Depressed mood, loss of interest/pleasure, weight changes, sleep disturbance, fatigue, feelings of worthlessness, difficulty concentrating, thoughts of death — lasting 2+ weeks.</p>
+      <p><strong>Learned helplessness:</strong> After repeated uncontrollable negative events, a person gives up trying to change their situation — linked to depression.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Bipolar disorder; schizophrenia; personality disorders; neurodevelopmental disorders</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p><strong>Bipolar disorder:</strong> Episodes of mania (elevated mood, grandiosity, decreased need for sleep, impulsivity) alternating with depression.</p>
+      <p><strong>Schizophrenia:</strong></p>
+      <ul>
+        <li><strong>Positive symptoms:</strong> ADDED experiences — hallucinations (false perceptions, e.g., hearing voices) and delusions (false beliefs, e.g., being persecuted)</li>
+        <li><strong>Negative symptoms:</strong> REDUCED functions — flat affect, poverty of speech, social withdrawal, lack of motivation</li>
+      </ul>
+      <p><strong>Borderline PD:</strong> Unstable relationships, identity, and moods; fear of abandonment; impulsivity; self-harm</p>
+      <p><strong>Antisocial PD:</strong> Persistent disregard for others' rights; deceitfulness, lack of remorse, impulsivity, aggression</p>
+      <p><strong>ASD (Autism Spectrum):</strong> Deficits in social communication; restricted, repetitive behaviors; varies in severity</p>
+      <p><strong>ADHD:</strong> Inattention and/or hyperactivity-impulsivity that impairs functioning; onset in childhood</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 10 ====== -->
+<div class="section" id="therapy">
+  <div class="section-header">
+    <span class="section-num">10</span>
+    <span class="section-dot dot-1"></span>
+    <h2 class="section-title color-1">Therapy</h2>
+  </div>
+  <button class="expand-all-btn" onclick="expandAll(this)">Expand All</button>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Biological therapy vs. psychotherapy; major schools</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p><strong>Biological therapy:</strong> Treats disorders with physical/medical means — medications (antidepressants, antipsychotics), ECT, TMS.</p>
+      <p><strong>Psychotherapy:</strong> Psychological treatment involving talking and behavioral techniques.</p>
+      <table class="compare-table">
+        <tr><th>Type</th><th>Focus</th></tr>
+        <tr><td><strong>Psychoanalysis/Psychodynamic</strong></td><td>Explore unconscious conflicts, early childhood; free association, dream analysis</td></tr>
+        <tr><td><strong>Humanistic</strong></td><td>Foster growth, self-acceptance; unconditional positive regard (Rogers)</td></tr>
+        <tr><td><strong>Behavior therapy</strong></td><td>Change maladaptive behaviors using conditioning principles</td></tr>
+        <tr><td><strong>CBT</strong></td><td>Change negative thoughts AND behaviors; most evidence-based</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-q" onclick="toggle(this)">
+      <span class="q-text">Rogers' client-centered therapy; behavior therapies; CBT; group therapy</span><span class="toggle-icon">▶</span>
+    </div>
+    <div class="card-a">
+      <p><strong>Rogers' client-centered therapy:</strong> Therapist provides unconditional positive regard, empathy, and genuineness. Goal: help client reach self-actualization and self-acceptance.</p>
+      <p><strong>Behavior therapy techniques:</strong></p>
+      <ul>
+        <li><strong>Systematic desensitization:</strong> Gradually expose client to feared stimulus while maintaining relaxation (treats phobias)</li>
+        <li><strong>Exposure and response prevention:</strong> Confront feared stimulus and resist compulsive response (used for OCD)</li>
+        <li><strong>Operant procedures:</strong> Use reinforcement/punishment to shape target behaviors (token economies)</li>
+      </ul>
+      <p><strong>Cognitive Behavioral Therapy (CBT):</strong> Identifies and challenges distorted thinking patterns; changes both cognitions and behaviors. Most empirically supported therapy.</p>
+      <p><strong>Group therapy:</strong> Multiple clients treated together. Benefits: social support, learn from others, feel less alone, cost-effective, practice social skills.</p>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  Good luck on your exam! You've got this. 🧠
+</footer>
+
+<script>
+function toggle(btn) {
+  const card = btn.closest('.card');
+  card.classList.toggle('open');
+}
+
+function expandAll(btn) {
+  const section = btn.closest('.section');
+  const cards = section.querySelectorAll('.card');
+  const allOpen = [...cards].every(c => c.classList.contains('open'));
+  cards.forEach(c => allOpen ? c.classList.remove('open') : c.classList.add('open'));
+  btn.textContent = allOpen ? 'Expand All' : 'Collapse All';
+}
+</script>
+</body>
+</html>
